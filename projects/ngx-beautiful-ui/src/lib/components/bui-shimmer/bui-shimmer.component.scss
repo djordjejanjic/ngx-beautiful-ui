@@ -1,0 +1,13 @@
+:host {
+  display: inline-block;
+  background-image: linear-gradient(90deg, var(--bui-text-faint) 35%, var(--bui-text) 50%, var(--bui-text-faint) 65%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: bui-shimmer-text var(--bui-shimmer-duration) linear infinite;
+}
+
+:host(.bui-shimmer--fast) {
+  animation-duration: var(--bui-shimmer-duration-fast);
+}

@@ -1,0 +1,24 @@
+:root {
+  --demo-column-width: 720px;
+  --demo-page-padding-x: 16px;
+  --demo-page-padding-y: 56px;
+  --demo-section-gap: 48px;
+  --demo-title-size: 28px;
+  --demo-thread-max-height: 560px;
+  --demo-menu-width: 240px;
+  --demo-font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bui-surface);
+  color: var(--bui-text);
+  font-family: var(--demo-font-sans);
+  -webkit-font-smoothing: antialiased;
+}

@@ -1,0 +1,26 @@
+<div class="bui-data-table" role="region" tabindex="0" [attr.aria-label]="ariaLabel()">
+  <table class="bui-data-table__table">
+    @if (header().length) {
+      <thead>
+        <tr>
+          @for (cell of header(); track $index) {
+            <th
+              class="bui-data-table__cell bui-data-table__cell--head"
+              scope="col"
+              [style.text-align]="align()[$index]"
+              [innerHTML]="cell"></th>
+          }
+        </tr>
+      </thead>
+    }
+    <tbody>
+      @for (row of rows(); track $index) {
+        <tr class="bui-data-table__row">
+          @for (cell of row; track $index) {
+            <td class="bui-data-table__cell" [style.text-align]="align()[$index]" [innerHTML]="cell"></td>
+          }
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

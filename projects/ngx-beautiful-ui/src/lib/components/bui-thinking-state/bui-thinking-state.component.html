@@ -1,0 +1,31 @@
+<div class="bui-thinking-state">
+  <button type="button" class="bui-thinking-state__header" [attr.aria-expanded]="expanded()" (click)="toggle()">
+    <bui-icon
+      class="bui-thinking-state__icon"
+      [class.bui-thinking-state__icon--working]="working()"
+      [src]="icons.sparkle"
+      [size]="iconSize.lg" />
+    <span class="bui-thinking-state__status" role="status">
+      @if (working()) {
+        <bui-shimmer class="bui-thinking-state__label" [fast]="true">{{ label() }}</bui-shimmer>
+      } @else {
+        <span class="bui-thinking-state__label bui-thinking-state__label--done">{{ doneText() }}</span>
+      }
+    </span>
+    <bui-icon
+      class="bui-thinking-state__chevron"
+      [class.bui-thinking-state__chevron--expanded]="expanded()"
+      [src]="icons.chevronDown"
+      [size]="iconSize.md" />
+  </button>
+
+  <div class="bui-collapse" [class.bui-collapse--open]="expanded()">
+    <div>
+      <div class="bui-thinking-state__trace">
+        <div class="bui-thinking-state__body" [class.bui-thinking-state__body--open]="expanded()">
+          <ng-content />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,58 @@
+:host {
+  display: block;
+}
+
+.bui-chip-select {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bui-space-3);
+
+  &__chip {
+    display: inline-flex;
+    align-items: center;
+    height: var(--bui-chip-height);
+    padding: 0 var(--bui-space-5);
+    border: 0;
+    border-radius: var(--bui-radius-pill);
+    background: var(--bui-surface);
+    box-shadow: var(--bui-shadow-btn);
+    color: var(--bui-text-muted);
+    font-family: inherit;
+    font-size: var(--bui-font-size-body-xs);
+    font-weight: var(--bui-font-weight-medium);
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    transition:
+      transform var(--bui-duration-fast) ease-out,
+      background-color var(--bui-duration-base) ease,
+      box-shadow var(--bui-duration-base) ease,
+      color var(--bui-duration-base) ease;
+
+    &:hover:not(:disabled) {
+      background: var(--bui-hover);
+      color: var(--bui-text);
+    }
+
+    &:active:not(:disabled) {
+      transform: scale(0.96);
+    }
+
+    &:disabled {
+      cursor: default;
+      opacity: 0.5;
+    }
+
+    &--selected,
+    &--selected:hover:not(:disabled) {
+      background: var(--bui-accent-soft);
+      box-shadow: 0 0 0 1px var(--bui-accent-border);
+      color: var(--bui-accent);
+    }
+  }
+
+  &--invalid &__chip:not(.bui-chip-select__chip--selected) {
+    box-shadow: 0 0 0 1px var(--bui-danger);
+  }
+}

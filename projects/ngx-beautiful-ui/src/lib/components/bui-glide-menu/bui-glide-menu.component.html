@@ -1,0 +1,38 @@
+<div
+  class="bui-glide-menu"
+  role="menu"
+  [class.bui-glide-menu--above]="placement() === placements.above"
+  [class.bui-glide-menu--dense]="dense()"
+  [attr.aria-label]="ariaLabel()"
+  (mouseleave)="onMouseLeave()"
+  (focusout)="onFocusOut($event)"
+  (keydown)="onKeydown($event)">
+  <span
+    class="bui-glide-menu__highlight"
+    aria-hidden="true"
+    [class.bui-glide-menu__highlight--visible]="highlightIndex() !== null"
+    [style.--bui-glide-index]="highlightPosition()"></span>
+  @for (item of items(); track item.id; let index = $index) {
+    <button
+      #row
+      type="button"
+      role="menuitem"
+      class="bui-glide-menu__row"
+      [class.bui-glide-menu__row--danger]="item.tone === 'danger'"
+      [disabled]="item.disabled"
+      (mousedown)="$event.preventDefault()"
+      (mouseenter)="highlightIndex.set(index)"
+      (focus)="highlightIndex.set(index)"
+      (click)="select(item)">
+      @if (item.icon) {
+        <span class="bui-glide-menu__icon">
+          <bui-icon [src]="item.icon" [size]="itemIconSize()" />
+        </span>
+      }
+      <span class="bui-glide-menu__label">{{ item.label }}</span>
+      @if (item.description) {
+        <span class="bui-glide-menu__description">{{ item.description }}</span>
+      }
+    </button>
+  }
+</div>

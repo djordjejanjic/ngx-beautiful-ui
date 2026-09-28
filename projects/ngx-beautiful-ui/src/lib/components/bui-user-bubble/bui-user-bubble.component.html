@@ -1,0 +1,12 @@
+<div class="bui-user-bubble">
+  <ng-content select="[buiBubbleAttachments]" />
+  <div class="bui-user-bubble__content">
+    <ng-content />
+  </div>
+  <div class="bui-user-bubble__meta">
+    <ng-content select="[buiBubbleActions]" />
+    @if (timestamp()) {
+      <span class="bui-user-bubble__time">{{ timestamp() }}</span>
+    }
+  </div>
+</div>

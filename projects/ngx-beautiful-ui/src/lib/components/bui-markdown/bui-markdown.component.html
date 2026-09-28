@@ -1,0 +1,9 @@
+<div class="bui-markdown" [class.bui-markdown--streaming]="streaming()" (click)="onClick($event)">
+  @for (segment of segments(); track $index) {
+    @if (segment.kind === 'table') {
+      <bui-data-table class="bui-markdown__segment" [header]="segment.header" [align]="segment.align" [rows]="segment.rows" />
+    } @else {
+      <div class="bui-markdown__segment" [innerHTML]="segment.html"></div>
+    }
+  }
+</div>

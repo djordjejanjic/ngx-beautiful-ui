@@ -1,0 +1,8 @@
+<span class="bui-stream-text"
+  >{{ parts().head }}<span class="bui-stream-text__tail">{{ parts().tail }}</span
+  ><span
+    class="bui-stream-text__caret"
+    aria-hidden="true"
+    [class.bui-stream-text__caret--streaming]="streaming()"
+    [class.bui-stream-text__caret--hidden]="!caret()"></span
+></span>

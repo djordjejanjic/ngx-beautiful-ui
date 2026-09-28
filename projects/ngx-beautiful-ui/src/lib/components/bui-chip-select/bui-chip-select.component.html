@@ -1,0 +1,18 @@
+<div
+  class="bui-chip-select"
+  role="group"
+  [class.bui-chip-select--invalid]="invalid() && touched()"
+  [attr.aria-label]="ariaLabel()"
+  (focusout)="markTouched()">
+  @for (chip of chips(); track chip.value) {
+    <button
+      type="button"
+      class="bui-chip-select__chip"
+      [class.bui-chip-select__chip--selected]="chip.selected"
+      [attr.aria-pressed]="chip.selected"
+      [disabled]="disabled() || chip.disabled"
+      (click)="toggle(chip)">
+      {{ chip.label }}
+    </button>
+  }
+</div>

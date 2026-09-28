@@ -1,0 +1,19 @@
+:host {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bui-icon {
+  display: block;
+  overflow: hidden;
+  background-color: currentColor;
+  -webkit-mask-image: var(--bui-icon-mask);
+  mask-image: var(--bui-icon-mask);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+}

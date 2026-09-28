@@ -1,0 +1,113 @@
+:host {
+  display: inline-flex;
+}
+
+:host(.bui-button-host--full-width) {
+  display: flex;
+}
+
+.bui-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  font-family: inherit;
+  font-weight: var(--bui-font-weight-medium);
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  transition:
+    transform var(--bui-duration-fast) ease-out,
+    background-color var(--bui-duration-fast) ease-out,
+    opacity var(--bui-duration-fast) ease-out;
+
+  &:active:not(:disabled) {
+    transform: scale(0.96);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  &--full-width {
+    width: 100%;
+  }
+
+  &--primary {
+    background: var(--bui-text);
+    box-shadow: var(--bui-shadow-filled);
+    color: var(--bui-surface);
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+
+  &--secondary {
+    background: var(--bui-surface);
+    box-shadow: var(--bui-shadow-btn);
+    color: var(--bui-text);
+
+    &:hover {
+      background: var(--bui-inset);
+    }
+
+    &[aria-expanded='true'] {
+      background: var(--bui-hover);
+    }
+  }
+
+  &--ghost {
+    background: var(--bui-hover-strong);
+    color: var(--bui-text);
+
+    &:hover {
+      background: var(--bui-border-strong);
+    }
+  }
+
+  &--accent {
+    background: var(--bui-accent);
+    box-shadow: var(--bui-shadow-filled);
+    color: var(--bui-on-accent);
+
+    &:hover {
+      background: var(--bui-accent-strong);
+    }
+  }
+
+  &--quiet {
+    background: transparent;
+    color: var(--bui-text);
+
+    &:hover {
+      background: var(--bui-hover);
+    }
+  }
+
+  &--xs {
+    gap: var(--bui-space-2);
+    height: var(--bui-control-md);
+    padding: 0 var(--bui-space-5);
+    border-radius: var(--bui-radius-pill);
+    font-size: var(--bui-font-size-body-xs);
+    font-weight: var(--bui-font-weight-normal);
+  }
+
+  &--sm {
+    gap: var(--bui-space-3);
+    height: var(--bui-button-height-sm);
+    padding: 0 var(--bui-space-6);
+    border-radius: var(--bui-radius-pill);
+    font-size: var(--bui-font-size-body-sm);
+  }
+
+  &--md {
+    gap: var(--bui-space-4);
+    padding: var(--bui-button-padding-y-md) var(--bui-space-8);
+    border-radius: var(--bui-radius-pill);
+    font-size: var(--bui-font-size-body-md);
+  }
+}

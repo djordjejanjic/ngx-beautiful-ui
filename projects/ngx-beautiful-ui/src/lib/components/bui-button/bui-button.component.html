@@ -1,0 +1,19 @@
+<button
+  class="bui-button"
+  [class.bui-button--primary]="variant() === 'primary'"
+  [class.bui-button--secondary]="variant() === 'secondary'"
+  [class.bui-button--ghost]="variant() === 'ghost'"
+  [class.bui-button--accent]="variant() === 'accent'"
+  [class.bui-button--quiet]="variant() === 'quiet'"
+  [class.bui-button--xs]="size() === 'xs'"
+  [class.bui-button--sm]="size() === 'sm'"
+  [class.bui-button--md]="size() === 'md'"
+  [class.bui-button--full-width]="fullWidth()"
+  [type]="type()"
+  [disabled]="disabled()"
+  [attr.aria-label]="ariaLabel()"
+  [attr.aria-expanded]="ariaExpanded()"
+  [attr.aria-pressed]="ariaPressed()"
+  (click)="clicked.emit($event)">
+  <ng-content />
+</button>

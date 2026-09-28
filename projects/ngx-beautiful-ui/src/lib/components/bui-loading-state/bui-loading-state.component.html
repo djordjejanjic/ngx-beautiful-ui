@@ -1,0 +1,11 @@
+<div class="bui-loading-state" role="status">
+  <span class="bui-loading-state__grid" aria-hidden="true">
+    @for (delay of cellDelays; track $index) {
+      <span class="bui-loading-state__cell" [style.animation-delay.ms]="delay"></span>
+    }
+  </span>
+  <bui-shimmer class="bui-loading-state__label" [fast]="true">{{ label() }}</bui-shimmer>
+  @if (showElapsed()) {
+    <span class="bui-loading-state__elapsed">{{ elapsed() }}</span>
+  }
+</div>

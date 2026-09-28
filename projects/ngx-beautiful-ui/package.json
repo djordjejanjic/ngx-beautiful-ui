@@ -1,0 +1,45 @@
+{
+  "name": "ngx-beautiful-ui",
+  "version": "0.1.0",
+  "description": "Unofficial Angular port of Beautiful UI: signal-based primitives for AI-native interfaces.",
+  "license": "MIT",
+  "author": "Djordje Janjic",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/djordjejanjic/ngx-beautiful-ui.git",
+    "directory": "projects/ngx-beautiful-ui"
+  },
+  "homepage": "https://github.com/djordjejanjic/ngx-beautiful-ui#readme",
+  "bugs": {
+    "url": "https://github.com/djordjejanjic/ngx-beautiful-ui/issues"
+  },
+  "keywords": [
+    "angular",
+    "signals",
+    "ai",
+    "chat",
+    "prompt",
+    "markdown",
+    "ui",
+    "components",
+    "beautiful-ui"
+  ],
+  "peerDependencies": {
+    "@angular/common": "^21.2.0",
+    "@angular/core": "^21.2.0",
+    "@angular/forms": "^21.2.0",
+    "rxjs": "^7.8.0"
+  },
+  "dependencies": {
+    "dompurify": "^3.4.16",
+    "marked": "^18.0.14",
+    "tslib": "^2.3.0"
+  },
+  "exports": {
+    "./styles": {
+      "sass": "./styles/beautiful-ui.scss",
+      "default": "./styles/beautiful-ui.scss"
+    }
+  },
+  "sideEffects": false
+}

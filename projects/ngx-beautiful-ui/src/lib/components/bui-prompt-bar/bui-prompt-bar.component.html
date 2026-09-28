@@ -1,0 +1,97 @@
+<div class="bui-prompt-bar" buiClickOutside (clickOutside)="closeMenu()">
+  @if (isMenuOpen()) {
+    <bui-glide-menu
+      class="bui-prompt-bar__menu"
+      [placement]="menuPlacement"
+      [items]="menuItems()"
+      [(highlightIndex)]="menuHighlight"
+      (itemSelected)="selectMenuItem($event)"
+      (dismissed)="closeMenu()" />
+  }
+
+  <div
+    class="bui-prompt-bar__composer"
+    [class.bui-prompt-bar__composer--tall]="tall()"
+    [class.bui-prompt-bar__composer--disabled]="disabled()"
+    [class.bui-prompt-bar__composer--invalid]="invalid()">
+    @if (hasAttachments()) {
+      <div class="bui-prompt-bar__attachments">
+        @for (attachment of attachments(); track attachment.id) {
+          <span class="bui-prompt-bar__attachment" [class.bui-prompt-bar__attachment--error]="attachment.status === attachmentStatus.error">
+            @switch (attachment.status) {
+              @case (attachmentStatus.uploading) {
+                <span class="bui-prompt-bar__spinner" aria-hidden="true"></span>
+              }
+              @case (attachmentStatus.error) {
+                <bui-icon [src]="icons.alert" [size]="iconSize.sm" />
+              }
+              @default {
+                <bui-icon [src]="icons.file" [size]="iconSize.sm" />
+              }
+            }
+            <span class="bui-prompt-bar__attachment-name" [title]="attachment.name">{{ attachment.name }}</span>
+            <button
+              type="button"
+              class="bui-prompt-bar__attachment-remove"
+              [attr.aria-label]="labels.removeAttachment + ' ' + attachment.name"
+              [disabled]="disabled()"
+              (click)="removeAttachment(attachment.id)">
+              <bui-icon [src]="icons.close" [size]="iconSize.xxs" />
+            </button>
+          </span>
+        }
+      </div>
+    }
+
+    <div class="bui-prompt-bar__controls" [class.bui-prompt-bar__controls--no-menu]="!hasMenu()">
+      @if (hasMenu()) {
+        <button
+          type="button"
+          class="bui-prompt-bar__icon-button bui-prompt-bar__plus"
+          [class.bui-prompt-bar__icon-button--active]="isMenuOpen()"
+          [attr.aria-label]="labels.addAttachments"
+          [attr.aria-expanded]="isMenuOpen()"
+          [disabled]="disabled()"
+          (click)="toggleMenu()">
+          <bui-icon [src]="icons.plus" [size]="plusIconSize()" />
+        </button>
+      }
+
+      <div class="bui-prompt-bar__field" [attr.data-value]="value()">
+        <textarea
+          #field
+          rows="1"
+          class="bui-prompt-bar__input"
+          [value]="value()"
+          [placeholder]="placeholder()"
+          [attr.aria-label]="ariaLabel()"
+          [disabled]="disabled()"
+          (input)="onInput(field.value)"
+          (keydown)="onKeydown($event)"
+          (blur)="markTouched()"></textarea>
+      </div>
+
+      @if (busy()) {
+        <button
+          type="button"
+          class="bui-prompt-bar__icon-button bui-prompt-bar__send bui-prompt-bar__send--ready"
+          [attr.aria-label]="labels.stop"
+          (click)="stop()">
+          <bui-icon [src]="icons.stop" [size]="iconSize.md" />
+        </button>
+      } @else {
+        <button
+          type="button"
+          class="bui-prompt-bar__icon-button bui-prompt-bar__send"
+          [class.bui-prompt-bar__send--ready]="canSubmit()"
+          [attr.aria-label]="labels.send"
+          [disabled]="!canSubmit()"
+          (click)="submit()">
+          <bui-icon [src]="sendIcon()" [size]="sendIconSize()" />
+        </button>
+      }
+    </div>
+  </div>
+
+  <ng-content select="input[type=file]" />
+</div>

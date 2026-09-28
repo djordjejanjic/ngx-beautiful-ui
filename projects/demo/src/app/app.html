@@ -1,0 +1,124 @@
+<main class="demo">
+  <header class="demo__header">
+    <p class="demo__eyebrow">Angular 21 · Signals · Standalone</p>
+    <h1 class="demo__title">ngx-beautiful-ui</h1>
+    <p class="demo__lede">
+      An unofficial Angular port of <a class="demo__link" [href]="links.site" target="_blank" rel="noopener noreferrer">Beautiful UI</a> by
+      Shane Levine. Primitives for AI-native interfaces: prompt bars, thinking traces, streaming markdown and more.
+    </p>
+    <nav class="demo__nav">
+      <a class="demo__link" [href]="links.repository" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a class="demo__link" [href]="links.upstream" target="_blank" rel="noopener noreferrer">Original React library</a>
+      <a class="demo__link" [href]="links.site" target="_blank" rel="noopener noreferrer">beautifului.dev</a>
+    </nav>
+  </header>
+
+  <section class="demo__section">
+    <h2 class="demo__heading">Chat</h2>
+    <p class="demo__caption">Every primitive composed into a scripted conversation. Pick a suggestion, or type and press Enter.</p>
+    <div class="demo__chat">
+      <div class="demo__thread">
+        @for (message of chat.messages(); track message.id) {
+          @if (message.role === 'user') {
+            <bui-user-bubble [timestamp]="message.createdAt | date: timeFormat">
+              {{ message.text }}
+              <bui-action-row buiBubbleActions [actions]="userActions" />
+            </bui-user-bubble>
+          } @else {
+            <article class="demo__assistant">
+              @if (message.phase === 'loading') {
+                <bui-loading-state [startedAt]="message.startedAt" />
+              } @else {
+                <bui-thinking-state [working]="message.phase === 'thinking'" [durationMs]="message.thinkingMs">
+                  <p class="demo__trace">{{ copy.thinkingTrace }}</p>
+                </bui-thinking-state>
+                @if (message.markdown) {
+                  <bui-markdown [markdown]="message.markdown" [streaming]="message.phase === 'streaming'" />
+                }
+                <bui-action-row
+                  [actions]="assistantActions"
+                  [visible]="message.phase === 'done'"
+                  [timestamp]="message.createdAt | date: timeFormat" />
+              }
+            </article>
+          }
+        }
+        <bui-suggestion-chips
+          [suggestions]="suggestions"
+          [heading]="copy.suggestionsHeading"
+          [visible]="!chat.busy()"
+          [disabled]="chat.busy()"
+          (suggestionSelected)="chat.send($event)" />
+      </div>
+      <bui-prompt-bar
+        [formField]="draft.text"
+        [busy]="chat.busy()"
+        [menuItems]="composerMenu"
+        [attachments]="chat.attachments()"
+        (submitted)="chat.send($event)"
+        (stopped)="chat.stop()"
+        (menuItemSelected)="chat.attach($event)"
+        (attachmentRemoved)="chat.removeAttachment($event)" />
+    </div>
+  </section>
+
+  <section class="demo__section">
+    <h2 class="demo__heading">Button</h2>
+    <p class="demo__caption"><code>bui-button</code> in five variants and three sizes.</p>
+    @for (size of buttonSizes; track size) {
+      <div class="demo__row">
+        @for (variant of buttonVariants; track variant) {
+          <bui-button [variant]="variant" [size]="size">{{ variant }}</bui-button>
+        }
+      </div>
+    }
+  </section>
+
+  <section class="demo__section">
+    <h2 class="demo__heading">Chip select</h2>
+    <p class="demo__caption"><code>bui-chip-select</code> is a signal-forms control. Selected: {{ selectedTone() }}</p>
+    <bui-chip-select [formField]="preferences.tone" [options]="chipOptions" ariaLabel="Tone" />
+  </section>
+
+  <section class="demo__section">
+    <h2 class="demo__heading">Glide menu</h2>
+    <p class="demo__caption">
+      <code>bui-glide-menu</code> with a gliding highlight and arrow-key navigation. Last pick: {{ pickedMenuItem() }}
+    </p>
+    <div class="demo__menu">
+      <bui-glide-menu [items]="menuItems" [itemIconSize]="menuIconSize" ariaLabel="Item actions" (itemSelected)="pickMenuItem($event)" />
+    </div>
+  </section>
+
+  <section class="demo__section">
+    <h2 class="demo__heading">Status</h2>
+    <p class="demo__caption">
+      <code>bui-loading-state</code>, <code>bui-thinking-state</code>, <code>bui-shimmer</code> and <code>bui-stream-text</code>.
+    </p>
+    <div class="demo__stack">
+      <bui-loading-state [label]="copy.loadingSample" />
+      <bui-thinking-state [durationMs]="4200" [(expanded)]="thinkingExpanded">
+        <p class="demo__trace">{{ copy.thinkingTrace }}</p>
+      </bui-thinking-state>
+      <bui-shimmer>{{ copy.shimmerSample }}</bui-shimmer>
+      <p class="demo__stream"><bui-stream-text [text]="copy.streamSample" [streaming]="true" /></p>
+    </div>
+  </section>
+
+  <section class="demo__section">
+    <h2 class="demo__heading">Markdown and data table</h2>
+    <p class="demo__caption">
+      <code>bui-markdown</code> sanitises with DOMPurify and renders tables with <code>bui-data-table</code>, which can also be used on its
+      own.
+    </p>
+    <div class="demo__stack">
+      <bui-markdown [markdown]="sampleMarkdown" />
+      <bui-data-table [header]="table.header" [align]="table.align" [rows]="table.rows" />
+    </div>
+  </section>
+
+  <footer class="demo__footer">
+    MIT licensed. Original design and React library © Shane Levine, built by Turbo. Angular port © Djordje Janjic. Not affiliated with the
+    original project.
+  </footer>
+</main>

@@ -1,0 +1,42 @@
+:host {
+  display: inline;
+}
+
+.bui-stream-text {
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+
+  &__tail {
+    filter: blur(1.6px);
+    -webkit-mask-image: linear-gradient(to right, var(--bui-text) 20%, color-mix(in srgb, var(--bui-text) 20%, transparent));
+    mask-image: linear-gradient(to right, var(--bui-text) 20%, color-mix(in srgb, var(--bui-text) 20%, transparent));
+  }
+
+  &__caret {
+    display: inline-block;
+    width: 2px;
+    height: 1.05em;
+    margin-left: 1.5px;
+    border-radius: 1px;
+    background: currentColor;
+    vertical-align: text-bottom;
+    translate: 0 -0.5px;
+    animation: bui-caret-blink var(--bui-caret-blink-duration) step-end infinite;
+
+    &--streaming {
+      animation: none;
+    }
+
+    &--hidden {
+      display: none;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bui-stream-text__tail {
+    filter: none;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}

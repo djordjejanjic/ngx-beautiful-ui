@@ -1,0 +1,18 @@
+<div class="bui-action-row" [class.bui-action-row--visible]="visible()" [attr.inert]="visible() ? null : ''">
+  @for (action of actions(); track action.id) {
+    <button
+      type="button"
+      class="bui-action-row__button"
+      [class.bui-action-row__button--active]="action.active"
+      [attr.aria-label]="action.label"
+      [attr.aria-pressed]="action.active ?? null"
+      [title]="action.label"
+      [disabled]="action.disabled"
+      (click)="actionClicked.emit(action.id)">
+      <bui-icon [src]="action.icon" [size]="iconSize.base" />
+    </button>
+  }
+  @if (timestamp()) {
+    <span class="bui-action-row__time">{{ timestamp() }}</span>
+  }
+</div>

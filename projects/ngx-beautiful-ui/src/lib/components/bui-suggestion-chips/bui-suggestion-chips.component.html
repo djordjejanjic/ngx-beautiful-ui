@@ -1,0 +1,18 @@
+<div class="bui-suggestions" [class.bui-suggestions--visible]="visible()" [attr.inert]="visible() ? null : ''">
+  @if (heading()) {
+    <p class="bui-suggestions__heading">{{ heading() }}</p>
+  }
+  <div class="bui-suggestions__list">
+    @for (suggestion of suggestions(); track $index) {
+      <button
+        type="button"
+        class="bui-suggestions__item"
+        [style.--bui-stagger-index]="$index"
+        [disabled]="disabled()"
+        (click)="suggestionSelected.emit(suggestion)">
+        <bui-icon class="bui-suggestions__icon" [src]="icons.cornerDownLeft" [size]="iconSize.xs" />
+        <span class="bui-suggestions__text">{{ suggestion }}</span>
+      </button>
+    }
+  </div>
+</div>

@@ -1,0 +1,39 @@
+:host {
+  display: block;
+}
+
+.bui-loading-state {
+  display: flex;
+  align-items: center;
+  gap: var(--bui-space-5);
+  width: fit-content;
+
+  &__grid {
+    display: grid;
+    flex-shrink: 0;
+    grid-template-columns: repeat(3, var(--bui-pixel-size));
+    gap: var(--bui-pixel-gap);
+  }
+
+  &__cell {
+    width: var(--bui-pixel-size);
+    height: var(--bui-pixel-size);
+    border-radius: var(--bui-radius-pill);
+    background: var(--bui-text);
+    opacity: 0.15;
+    animation: bui-pixel-on var(--bui-pixel-cycle) ease-in-out infinite;
+  }
+
+  &__label {
+    font-size: var(--bui-font-size-body-sm);
+    font-weight: var(--bui-font-weight-medium);
+    white-space: nowrap;
+  }
+
+  &__elapsed {
+    color: var(--bui-text-faint);
+    font-family: var(--bui-font-mono);
+    font-size: var(--bui-font-size-body-xs);
+    font-variant-numeric: tabular-nums;
+  }
+}

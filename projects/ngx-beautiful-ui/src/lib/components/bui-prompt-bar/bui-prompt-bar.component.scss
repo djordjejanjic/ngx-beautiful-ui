@@ -1,0 +1,280 @@
+:host {
+  display: block;
+}
+
+.bui-prompt-bar {
+  position: relative;
+  width: 100%;
+
+  &__menu {
+    position: absolute;
+    right: 0;
+    bottom: calc(100% + var(--bui-space-4));
+    left: 0;
+    z-index: 1;
+  }
+
+  &__composer {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    flex-direction: column;
+    gap: var(--bui-space-3);
+    padding: var(--bui-space-3);
+    overflow: hidden;
+    border: 1px solid var(--bui-border);
+    border-radius: var(--bui-radius-2xl);
+    background: var(--bui-surface);
+    box-shadow: var(--bui-shadow-card);
+    transition:
+      border-color var(--bui-duration-fast) ease,
+      border-radius var(--bui-duration-fast) ease;
+
+    &:focus-within {
+      border-color: var(--bui-border-strong);
+    }
+
+    &--tall {
+      gap: var(--bui-prompt-bar-gap, var(--bui-space-5));
+      min-height: var(--bui-prompt-bar-min-height, auto);
+      padding: var(--bui-prompt-bar-padding, var(--bui-space-7));
+      border-radius: var(--bui-prompt-bar-radius, var(--bui-radius-3xl));
+    }
+
+    &--disabled {
+      background: var(--bui-inset);
+    }
+
+    &--invalid,
+    &--invalid:focus-within {
+      border-color: var(--bui-danger);
+    }
+  }
+
+  &__attachments {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--bui-space-3);
+    padding: var(--bui-space-1) var(--bui-space-1) 0;
+  }
+
+  &__attachment {
+    display: flex;
+    align-items: center;
+    gap: var(--bui-space-3);
+    height: var(--bui-chip-height);
+    padding: var(--bui-space-2) var(--bui-space-2) var(--bui-space-2) var(--bui-space-3);
+    border-radius: var(--bui-radius-sm);
+    background: var(--bui-field);
+    box-shadow: var(--bui-shadow-hairline);
+    color: var(--bui-text-muted);
+    font-size: var(--bui-font-size-xs);
+    animation: bui-pop-in var(--bui-duration-base) var(--bui-ease-out) backwards;
+
+    &--error {
+      background: var(--bui-danger-soft);
+      color: var(--bui-danger);
+    }
+  }
+
+  &__attachment-name {
+    max-width: var(--bui-attachment-name-max-width);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__attachment-remove {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--bui-control-sm);
+    height: var(--bui-control-sm);
+    margin: calc(-1 * var(--bui-space-2)) 0;
+    padding: 0;
+    border: 0;
+    border-radius: var(--bui-radius-xs);
+    background: transparent;
+    color: var(--bui-text-faint);
+    cursor: pointer;
+    transition:
+      background-color var(--bui-duration-instant) ease,
+      color var(--bui-duration-instant) ease;
+
+    &:hover:not(:disabled) {
+      background: color-mix(in srgb, var(--bui-border) 70%, transparent);
+      color: var(--bui-text);
+    }
+
+    &:disabled {
+      cursor: default;
+    }
+  }
+
+  &__spinner {
+    flex-shrink: 0;
+    width: var(--bui-space-6);
+    height: var(--bui-space-6);
+    border: 1.5px solid var(--bui-border-strong);
+    border-top-color: var(--bui-text-muted);
+    border-radius: var(--bui-radius-pill);
+    animation: bui-spin var(--bui-spin-duration) linear infinite;
+  }
+
+  &__controls {
+    display: grid;
+    grid-template-columns: var(--bui-prompt-bar-control-size, var(--bui-control-md)) minmax(0, 1fr) var(
+        --bui-prompt-bar-control-size,
+        var(--bui-control-md)
+      );
+    align-items: end;
+    gap: var(--bui-space-3) var(--bui-space-2);
+
+    &--no-menu {
+      grid-template-columns: minmax(0, 1fr) var(--bui-prompt-bar-control-size, var(--bui-control-md));
+    }
+  }
+
+  &__plus {
+    grid-row: 1;
+    grid-column: 1;
+    justify-self: start;
+  }
+
+  &__field {
+    display: grid;
+    grid-row: 1;
+    grid-column: 2;
+    min-width: 0;
+
+    &::after {
+      content: attr(data-value) ' ';
+      visibility: hidden;
+      overflow: hidden;
+      white-space: pre-wrap;
+    }
+  }
+
+  &__controls--no-menu &__field {
+    grid-column: 1;
+  }
+
+  &__field::after,
+  &__input {
+    grid-area: 1 / 1 / 2 / 2;
+    box-sizing: border-box;
+    min-height: var(--bui-control-md);
+    max-height: var(--bui-prompt-max-height);
+    padding: calc((var(--bui-control-md) - var(--bui-line-height-input)) / 2) var(--bui-space-2);
+    font-family: inherit;
+    font-size: var(--bui-font-size-body-sm);
+    line-height: var(--bui-line-height-input);
+    overflow-wrap: anywhere;
+  }
+
+  &__input {
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    border: 0;
+    background: transparent;
+    color: var(--bui-text);
+    overflow-y: auto;
+    resize: none;
+
+    &::placeholder {
+      color: var(--bui-text-faint);
+    }
+
+    &:focus-visible {
+      outline: none;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
+
+  &__composer--tall &__field {
+    grid-column: 1 / -1;
+  }
+
+  &__composer--tall &__field::after,
+  &__composer--tall &__input {
+    min-height: var(--bui-prompt-bar-field-min-height, var(--bui-prompt-min-height-tall));
+    max-height: var(--bui-prompt-max-height-tall);
+    padding: var(--bui-prompt-bar-field-padding, var(--bui-space-4));
+    font-size: var(--bui-prompt-bar-font-size, var(--bui-font-size-body-md));
+    font-weight: var(--bui-prompt-bar-font-weight, inherit);
+    line-height: var(--bui-prompt-bar-line-height, var(--bui-line-height-input-tall));
+  }
+
+  &__composer--tall &__controls {
+    row-gap: var(--bui-prompt-bar-controls-row-gap, var(--bui-space-3));
+    padding: var(--bui-prompt-bar-controls-padding, 0);
+  }
+
+  &__composer--tall &__plus,
+  &__composer--tall &__send {
+    grid-row: 2;
+  }
+
+  &__icon-button {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: var(--bui-prompt-bar-control-size, var(--bui-control-md));
+    height: var(--bui-prompt-bar-control-size, var(--bui-control-md));
+    padding: 0;
+    border: 0;
+    border-radius: var(--bui-radius-md);
+    background: transparent;
+    color: var(--bui-text-faint);
+    cursor: pointer;
+    transition:
+      background-color var(--bui-duration-fast) ease,
+      color var(--bui-duration-fast) ease,
+      transform var(--bui-duration-fast) ease;
+
+    &:hover:not(:disabled) {
+      background: var(--bui-hover);
+      color: var(--bui-text);
+    }
+
+    &:active:not(:disabled) {
+      transform: scale(0.94);
+    }
+
+    &:disabled {
+      cursor: default;
+    }
+
+    &--active {
+      background: var(--bui-hover);
+      color: var(--bui-text);
+    }
+  }
+
+  &__send {
+    grid-row: 1;
+    grid-column: -2;
+    background: var(--bui-border-strong);
+    color: var(--bui-text-muted);
+    transition:
+      background-color var(--bui-duration-base) ease,
+      color var(--bui-duration-base) ease,
+      transform var(--bui-duration-base) ease;
+
+    &:hover:not(:disabled) {
+      background: var(--bui-border-strong);
+      color: var(--bui-text-muted);
+    }
+
+    &--ready,
+    &--ready:hover:not(:disabled) {
+      background: var(--bui-text);
+      color: var(--bui-surface);
+    }
+  }
+}
