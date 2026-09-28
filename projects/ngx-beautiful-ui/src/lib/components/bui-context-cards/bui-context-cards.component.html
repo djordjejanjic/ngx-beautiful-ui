@@ -1,0 +1,42 @@
+<div class="bui-context-cards">
+  @if (heading()) {
+    <div class="bui-context-cards__header">
+      <span class="bui-context-cards__heading">{{ heading() }}</span>
+      @if (count() !== null) {
+        <span class="bui-context-cards__count">{{ count() }}</span>
+      }
+    </div>
+  }
+
+  @for (chunk of chunks(); track chunk.id; let index = $index) {
+    <article class="bui-context-cards__card" [style.--bui-stagger-index]="index">
+      <div class="bui-context-cards__bar">
+        <span class="bui-context-cards__title">
+          <bui-icon [src]="icons.lines" [size]="iconSize.xs" />
+          <span class="bui-context-cards__title-text">{{ chunk.title }}</span>
+        </span>
+        @if (chunk.meta) {
+          <span class="bui-context-cards__meta">{{ chunk.meta }}</span>
+        }
+      </div>
+      <p class="bui-context-cards__body">{{ chunk.body }}</p>
+      <div class="bui-context-cards__footer">
+        @if (chunk.href) {
+          <a class="bui-context-cards__source" target="_blank" rel="noopener noreferrer" [href]="chunk.href">
+            <ng-container [ngTemplateOutlet]="sourceContent" [ngTemplateOutletContext]="{ $implicit: chunk }" />
+          </a>
+        } @else {
+          <span class="bui-context-cards__source">
+            <ng-container [ngTemplateOutlet]="sourceContent" [ngTemplateOutletContext]="{ $implicit: chunk }" />
+          </span>
+        }
+      </div>
+    </article>
+  }
+</div>
+
+<ng-template #sourceContent let-chunk>
+  <span class="bui-context-cards__badge" [attr.data-tone]="chunk.badgeTone ?? 'danger'">{{ chunk.badge }}</span>
+  {{ chunk.source }}
+  <bui-icon [src]="icons.arrowUpRight" [size]="iconSize.tiny" />
+</ng-template>

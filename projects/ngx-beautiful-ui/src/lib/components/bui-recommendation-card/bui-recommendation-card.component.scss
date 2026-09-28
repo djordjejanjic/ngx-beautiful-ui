@@ -1,0 +1,107 @@
+:host {
+  display: block;
+}
+
+.bui-recommendation-card {
+  width: 100%;
+  max-width: var(--bui-card-max-width);
+  overflow: hidden;
+  border-radius: var(--bui-radius-lg);
+  background: var(--bui-surface);
+  box-shadow: var(--bui-shadow-card);
+
+  &__content {
+    padding: var(--bui-space-6);
+  }
+
+  &__heading {
+    color: var(--bui-text);
+    font-size: var(--bui-font-size-body-md);
+    font-weight: var(--bui-font-weight-medium);
+  }
+
+  &__body {
+    min-height: 48px;
+    margin: var(--bui-space-3) 0 0;
+    color: var(--bui-text-muted);
+    font-size: var(--bui-font-size-body-sm);
+    line-height: var(--bui-line-height-relaxed);
+    animation: bui-fade-in var(--bui-duration-menu) ease-out backwards;
+  }
+
+  &__drawer {
+    padding: var(--bui-space-4);
+    border-top: 1px solid var(--bui-border);
+  }
+
+  &__drawer-label {
+    margin: 0;
+    padding: 0 var(--bui-space-3) var(--bui-space-2);
+    color: var(--bui-text-faint);
+    font-size: var(--bui-font-size-caption);
+    font-weight: var(--bui-font-weight-medium);
+  }
+
+  &__option {
+    display: flex;
+    align-items: center;
+    gap: var(--bui-space-5);
+    width: 100%;
+    padding: var(--bui-space-3);
+    border: 0;
+    border-radius: var(--bui-radius-md);
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color var(--bui-duration-instant) ease;
+
+    &:hover {
+      background: var(--bui-hover);
+    }
+  }
+
+  &__option-summary {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    color: var(--bui-text);
+    font-size: var(--bui-font-size-sm);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__option-label {
+    flex-shrink: 0;
+    color: var(--bui-text-faint);
+    font-size: var(--bui-font-size-caption);
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--bui-space-6);
+    padding: var(--bui-space-5);
+  }
+
+  &__status {
+    display: flex;
+    align-items: center;
+    gap: var(--bui-space-4);
+  }
+
+  &__status-label {
+    color: var(--bui-text-muted);
+    font-size: var(--bui-font-size-sm);
+    font-weight: var(--bui-font-weight-medium);
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--bui-space-4);
+    margin-right: calc(-1 * var(--bui-space-1));
+  }
+}

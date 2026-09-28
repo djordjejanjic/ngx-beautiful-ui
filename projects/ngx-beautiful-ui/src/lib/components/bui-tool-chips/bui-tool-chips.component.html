@@ -1,0 +1,112 @@
+<div class="bui-tool-chips">
+  <button type="button" class="bui-tool-chips__header" [attr.aria-expanded]="expanded()" (click)="toggle()">
+    <bui-icon
+      class="bui-tool-chips__header-caret"
+      [class.bui-tool-chips__header-caret--collapsed]="!expanded()"
+      [src]="icons.chevronDown"
+      [size]="iconSize.sm" />
+    <span class="bui-tool-chips__heading">{{ heading() }}</span>
+  </button>
+
+  <div class="bui-collapse" [class.bui-collapse--open]="expanded()" [attr.inert]="expanded() ? null : ''">
+    <div>
+      <div class="bui-tool-chips__body">
+        <div class="bui-tool-chips__steps">
+          @for (step of stepViews(); track step.id) {
+            <div class="bui-tool-chips__step">
+              <button
+                type="button"
+                class="bui-tool-chips__step-button"
+                [class.bui-tool-chips__step-button--open]="step.expanded"
+                [attr.aria-expanded]="step.expanded"
+                (click)="toggleStep(step.id)">
+                <span class="bui-tool-chips__step-icon" aria-hidden="true">
+                  <bui-icon class="bui-tool-chips__glyph" [src]="step.icon" [size]="iconSize.md" />
+                  <bui-icon class="bui-tool-chips__caret" [src]="icons.chevronDown" [size]="iconSize.sm" />
+                </span>
+                <span class="bui-tool-chips__step-label">{{ step.label }}</span>
+                <span class="bui-tool-chips__chip" [class.bui-tool-chips__chip--mono]="step.mono">{{ step.chip }}</span>
+              </button>
+
+              @if (step.detail.length) {
+                <div class="bui-collapse" [class.bui-collapse--open]="step.expanded">
+                  <div>
+                    <div class="bui-tool-chips__detail" [class.bui-tool-chips__detail--mono]="step.detailMono">
+                      @for (line of step.detail; track $index) {
+                        <span class="bui-tool-chips__detail-line" [class.bui-tool-chips__detail-line--add]="line.tone === 'add'">{{
+                          line.text
+                        }}</span>
+                      }
+                    </div>
+                  </div>
+                </div>
+              }
+            </div>
+          }
+        </div>
+
+        @if (fileViews().length) {
+          <div class="bui-tool-chips__files">
+            @for (file of fileViews(); track file.file; let index = $index) {
+              <span class="bui-tool-chips__file" (mouseenter)="openPreview(file, $event)" (mouseleave)="closePreview(file.file)">
+                <button
+                  type="button"
+                  class="bui-tool-chips__file-button"
+                  [style.--bui-stagger-index]="index"
+                  [attr.aria-expanded]="preview()?.file?.file === file.file"
+                  [attr.aria-label]="file.ariaLabel"
+                  (focus)="openPreview(file, $event)"
+                  (blur)="closePreview(file.file)">
+                  <span class="bui-tool-chips__file-name">{{ file.file }}</span>
+                  <span class="bui-tool-chips__added">+{{ file.added }}</span>
+                  @if (file.removed > 0) {
+                    <span class="bui-tool-chips__removed">−{{ file.removed }}</span>
+                  }
+                </button>
+              </span>
+            }
+            @if (moreLabel()) {
+              <button
+                type="button"
+                class="bui-tool-chips__more"
+                [style.--bui-stagger-index]="fileViews().length"
+                (click)="moreClicked.emit()">
+                {{ moreLabel() }}
+              </button>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  #previewPopover
+  popover="manual"
+  class="bui-tool-chips__preview"
+  [class.bui-tool-chips__preview--above]="preview()?.top === null"
+  [style.width.px]="previewWidth"
+  [style.left.px]="preview()?.left"
+  [style.top.px]="preview()?.top"
+  [style.bottom.px]="preview()?.bottom">
+  @if (preview(); as preview) {
+    <div class="bui-tool-chips__preview-head">
+      <span class="bui-tool-chips__preview-name">{{ preview.file.file }}</span>
+      <span class="bui-tool-chips__preview-stat">
+        <span class="bui-tool-chips__added">+{{ preview.file.added }}</span>
+        @if (preview.file.removed > 0) {
+          <span class="bui-tool-chips__removed">−{{ preview.file.removed }}</span>
+        }
+      </span>
+    </div>
+    <div class="bui-tool-chips__preview-body">
+      @for (line of preview.file.lines; track $index) {
+        <div class="bui-tool-chips__preview-line" [attr.data-tone]="line.tone">
+          <span class="bui-tool-chips__preview-sign">{{ line.sign }}</span>
+          <span class="bui-tool-chips__preview-text">{{ line.text }}</span>
+        </div>
+      }
+    </div>
+  }
+</div>

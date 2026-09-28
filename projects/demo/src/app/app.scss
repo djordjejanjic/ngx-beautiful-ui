@@ -62,6 +62,27 @@
     gap: var(--bui-space-6);
   }
 
+  &__heading-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--bui-space-6);
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--demo-grid-column-min)), 1fr));
+    align-items: start;
+    gap: var(--bui-space-12);
+  }
+
+  &__prose {
+    margin: 0;
+    color: var(--bui-text);
+    font-size: var(--bui-font-size-body-sm);
+    line-height: var(--bui-line-height-relaxed);
+  }
+
   &__heading {
     margin: 0;
     color: var(--bui-text);

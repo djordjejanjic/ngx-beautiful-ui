@@ -1,0 +1,35 @@
+:host {
+  --bui-signal-meter-color: var(--bui-text-faint);
+
+  display: inline-flex;
+  align-items: flex-end;
+  gap: var(--bui-space-1);
+}
+
+:host([data-tone='success']) {
+  --bui-signal-meter-color: var(--bui-success);
+}
+
+:host([data-tone='warning']) {
+  --bui-signal-meter-color: var(--bui-warning);
+}
+
+:host([data-tone='danger']) {
+  --bui-signal-meter-color: var(--bui-danger);
+}
+
+:host([data-tone='accent']) {
+  --bui-signal-meter-color: var(--bui-accent);
+}
+
+.bui-signal-meter__bar {
+  width: var(--bui-signal-meter-bar-width);
+  height: var(--bui-signal-meter-bar-height);
+  border-radius: var(--bui-radius-pill);
+  background: var(--bui-border-strong);
+  transition: background-color var(--bui-duration-medium) ease;
+
+  &--active {
+    background: var(--bui-signal-meter-color);
+  }
+}

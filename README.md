@@ -11,22 +11,36 @@ and no UI framework dependency.
 
 ## Components
 
-| Selector               | What it does                                                                                                         |
-| ---------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| `bui-prompt-bar`       | Composer with an auto-growing textarea, attachment chips, a `+` menu and send/stop. Signal-forms control (`string`). |
-| `bui-user-bubble`      | User message bubble with a timestamp and `[buiBubbleAttachments]` / `[buiBubbleActions]` content slots.              |
-| `bui-loading-state`    | Pixel-grid loader with a shimmering label and an elapsed timer.                                                      |
-| `bui-thinking-state`   | Collapsible "Thinking… / Thought for 4 seconds" trace with two-way `[(expanded)]`.                                   |
-| `bui-stream-text`      | Plain text that streams in with a soft blurred tail and a caret.                                                     |
-| `bui-markdown`         | GFM markdown rendered with `marked`, sanitised with DOMPurify. Emits `(linkActivated)` for same-origin links.        |
-| `bui-data-table`       | Scrollable, card-style table. Used by `bui-markdown` for tables and usable on its own.                               |
-| `bui-action-row`       | Row of icon actions (copy, feedback, retry…) with an optional timestamp.                                             |
-| `bui-suggestion-chips` | Staggered list of follow-up suggestions.                                                                             |
-| `bui-chip-select`      | Single or multiple chip picker. Signal-forms control (`string[]`).                                                   |
-| `bui-glide-menu`       | Menu with a gliding highlight, arrow-key navigation, disabled items and a danger tone.                               |
-| `bui-button`           | `primary`, `secondary`, `ghost`, `accent` and `quiet` variants in `xs`, `sm` and `md` sizes.                         |
-| `bui-shimmer`          | Shimmering text for pending states.                                                                                  |
-| `bui-icon`             | Mask-based icon that takes any image URL and is coloured with `currentColor`.                                        |
+| Selector                  | What it does                                                                                                         |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| **Chat**                  |                                                                                                                      |
+| `bui-prompt-bar`          | Composer with an auto-growing textarea, attachment chips, a `+` menu and send/stop. Signal-forms control (`string`). |
+| `bui-user-bubble`         | User message bubble with a timestamp and `[buiBubbleAttachments]` / `[buiBubbleActions]` content slots.              |
+| `bui-markdown`            | GFM markdown rendered with `marked`, sanitised with DOMPurify. Emits `(linkActivated)` for same-origin links.        |
+| `bui-stream-text`         | Plain text that streams in with a soft blurred tail and a caret.                                                     |
+| `bui-action-row`          | Row of icon actions (copy, feedback, retry…) with an optional timestamp.                                             |
+| `bui-suggestion-chips`    | Staggered list of follow-up suggestions.                                                                             |
+| `bui-source-chip`         | Inline citation chip with a favicon and domain.                                                                      |
+| `bui-source-list`         | "3 sources" toggle with an avatar stack that expands into the full source list.                                      |
+| **Agent status**          |                                                                                                                      |
+| `bui-loading-state`       | Pixel-grid loader with a shimmering label and an elapsed timer.                                                      |
+| `bui-thinking-state`      | Collapsible "Thinking… / Thought for 4 seconds" trace with two-way `[(expanded)]`.                                   |
+| `bui-tool-chips`          | Tool calls as compact, expandable rows, plus file-diff chips with a hover diff preview.                              |
+| `bui-task-rows`           | Pending, running, failed and completed tasks with expandable details, as capsules or a list.                         |
+| `bui-approval-card`       | Human-in-the-loop questions, one at a time, with single or multiple choice and a custom answer.                      |
+| `bui-recommendation-card` | Agent suggestion with a confidence meter, alternatives drawer and accept action.                                     |
+| `bui-context-cards`       | Retrieved knowledge chunks with their sources.                                                                       |
+| `bui-code-block`          | Line-numbered code listing with copy, or a unified diff with word-level changes.                                     |
+| **Building blocks**       |                                                                                                                      |
+| `bui-button`              | `primary`, `secondary`, `ghost`, `accent`, `success` and `quiet` variants in `xs`, `sm` and `md` sizes.              |
+| `bui-chip-select`         | Single or multiple chip picker. Signal-forms control (`string[]`).                                                   |
+| `bui-glide-menu`          | Menu with a gliding highlight, arrow-key navigation, disabled items and a danger tone.                               |
+| `bui-data-table`          | Scrollable, card-style table. Used by `bui-markdown` for tables and usable on its own.                               |
+| `bui-entity-chip`         | Inline reference to a person, team or record: a monogram and a name.                                                 |
+| `bui-value-pill`          | Inline value badge in `neutral`, `success`, `warning`, `danger` or `accent`.                                         |
+| `bui-signal-meter`        | Three-bar confidence meter.                                                                                          |
+| `bui-shimmer`             | Shimmering text for pending states.                                                                                  |
+| `bui-icon`                | Mask-based icon that takes any image URL and is coloured with `currentColor`.                                        |
 
 The package also exports `BuiClickOutsideDirective`, the `BUI_ICONS` set, all `Bui*` types and the static helpers used by the components.
 
@@ -35,6 +49,8 @@ The package also exports `BuiClickOutsideDirective`, the `BUI_ICONS` set, all `B
 - Angular `^21.2` (standalone, zoneless or zone.js).
 - `bui-prompt-bar` and `bui-chip-select` implement `FormValueControl` from `@angular/forms/signals`, which is still experimental in
   Angular 21.
+- The diff preview in `bui-tool-chips` uses the browser Popover API (Chrome 114+, Safari 17+, Firefox 125+). Older browsers
+  simply show no preview.
 - Light theme only for now. Server-side rendering has not been tested yet.
 
 ## Installation
@@ -104,7 +120,8 @@ Every colour, space, radius, duration and font size is a CSS custom property def
 }
 ```
 
-Some components also expose optional hooks, such as `--bui-prompt-bar-radius`, `--bui-prompt-bar-padding` and `--bui-menu-row-height`.
+Components also expose their own sizing tokens, such as `--bui-task-row-height`, `--bui-card-max-width`, `--bui-prompt-bar-radius` and
+`--bui-menu-row-height`, and code colours live in `--bui-code-keyword`, `--bui-code-literal` and `--bui-code-function`.
 
 ## Icons
 
@@ -113,8 +130,10 @@ Some components also expose optional hooks, such as `--bui-prompt-bar-radius`, `
 
 ## Differences from the original
 
-- The original is a React 19 + Tailwind v4 shadcn registry. This port covers a subset of its primitives, implemented with Angular signals
-  and plain SCSS.
+- The original is a React 19 + Tailwind v4 shadcn registry. This port is built with Angular signals and plain SCSS, and components take
+  their data through inputs instead of shipping demo content.
+- Not ported yet: chat composer, diff table, records table, filter table, sidebar nav, search, flowchart, insight cards, fine-tune card
+  and selection actions. `bui-user-bubble`, `bui-markdown`, `bui-chip-select` and `bui-suggestion-chips` are additions of this port.
 - The original ships a commercial icon set. This port uses its own icons derived from [Lucide](https://lucide.dev), see
   [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
@@ -131,4 +150,4 @@ npm run format:check
 ## License
 
 [MIT](LICENSE). The original design and React library are © Shane Levine. The Angular port is © Djordje Janjic. Icon shapes are derived
-from Lucide (ISC) and Feather (MIT), see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+from Lucide (ISC), Feather (MIT) and Heroicons (MIT), see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

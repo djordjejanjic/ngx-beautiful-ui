@@ -3,8 +3,8 @@
     <p class="demo__eyebrow">Angular 21 · Signals · Standalone</p>
     <h1 class="demo__title">ngx-beautiful-ui</h1>
     <p class="demo__lede">
-      An unofficial Angular port of <a class="demo__link" [href]="links.site" target="_blank" rel="noopener noreferrer">Beautiful UI</a> by
-      Shane Levine. Primitives for AI-native interfaces: prompt bars, thinking traces, streaming markdown and more.
+      An unofficial Angular port of <a class="demo__link" [href]="links.site" target="_blank" rel="noopener noreferrer">Beautiful UI</a>.
+      Primitives for AI-native interfaces: prompt bars, thinking traces, streaming markdown and more.
     </p>
     <nav class="demo__nav">
       <a class="demo__link" [href]="links.repository" target="_blank" rel="noopener noreferrer">GitHub</a>
@@ -39,6 +39,9 @@
                   [actions]="assistantActions"
                   [visible]="message.phase === 'done'"
                   [timestamp]="message.createdAt | date: timeFormat" />
+                @if (message.phase === 'done') {
+                  <bui-source-list [sources]="sources" />
+                }
               }
             </article>
           }
@@ -63,8 +66,103 @@
   </section>
 
   <section class="demo__section">
+    <div class="demo__heading-row">
+      <h2 class="demo__heading">Agent activity</h2>
+      <bui-button variant="secondary" size="xs" (clicked)="agent.replay()">{{ agentCopy.replay }}</bui-button>
+    </div>
+    <p class="demo__caption">
+      <code>bui-tool-chips</code> streams tool calls in as they arrive; hover a file chip to preview its diff.
+      <code>bui-task-rows</code> tracks pending, running, failed and completed work. Click any row to expand it.
+    </p>
+    <div class="demo__grid">
+      <bui-tool-chips [heading]="agentCopy.toolHeading" [steps]="agent.steps()" [files]="agent.files()" [moreLabel]="agentCopy.toolMore" />
+      <div class="demo__stack">
+        <bui-task-rows [tasks]="agent.tasks()" />
+        <bui-task-rows layout="list" [tasks]="agent.tasks()" />
+      </div>
+    </div>
+  </section>
+
+  <section class="demo__section">
+    <h2 class="demo__heading">Approval card</h2>
+    <p class="demo__caption">
+      <code>bui-approval-card</code> asks one question at a time before the agent acts. Single-choice answers advance automatically.
+    </p>
+    @if (approvalVisible()) {
+      <bui-approval-card [questions]="approvalQuestions" (submitted)="submitApproval($event)" (dismissed)="approvalVisible.set(false)" />
+      <p class="demo__caption">{{ approvalSummary() }}</p>
+    } @else {
+      <div class="demo__row">
+        <span class="demo__caption">{{ agentCopy.approvalDismissed }}</span>
+        <bui-button variant="secondary" size="xs" (clicked)="showApproval()">{{ agentCopy.approvalShow }}</bui-button>
+      </div>
+    }
+  </section>
+
+  <section class="demo__section">
+    <h2 class="demo__heading">Recommendation card</h2>
+    <p class="demo__caption">
+      <code>bui-recommendation-card</code> pairs a suggestion with a confidence meter. Open Alternatives to promote another option.
+    </p>
+    <bui-recommendation-card [heading]="agentCopy.recommendationHeading" [options]="recommendations()" />
+    <ng-template #publishBody>
+      Publish <bui-entity-chip name="ngx-beautiful-ui" /> to npm with <bui-value-pill tone="success">25 components</bui-value-pill> and the
+      new tokens.
+    </ng-template>
+    <ng-template #candidateBody>
+      Ship a <bui-value-pill>release candidate</bui-value-pill> first and collect feedback for a week.
+    </ng-template>
+  </section>
+
+  <section class="demo__section">
+    <h2 class="demo__heading">Context and sources</h2>
+    <p class="demo__caption">
+      <code>bui-context-cards</code> shows retrieved chunks, <code>bui-source-chip</code> cites inline and
+      <code>bui-source-list</code> collects every source behind a toggle.
+    </p>
+    <div class="demo__grid">
+      <bui-context-cards [chunks]="contextChunks" [count]="agentCopy.contextCount" />
+      <div class="demo__stack">
+        <p class="demo__prose">
+          Signals are the recommended way to hold state in Angular
+          <bui-source-chip [source]="sources[0]" />
+          and pair well with CSS custom properties for theming
+          <bui-source-chip [source]="sources[1]" />.
+        </p>
+        <bui-source-list [sources]="sources" />
+      </div>
+    </div>
+  </section>
+
+  <section class="demo__section">
+    <h2 class="demo__heading">Code block</h2>
+    <p class="demo__caption">
+      <code>bui-code-block</code> in <code>code</code> mode with copy, and in <code>diff</code> mode with word-level changes.
+    </p>
+    <div class="demo__grid">
+      <bui-code-block [filename]="agentCopy.codeFile" [lines]="codeLines" />
+      <bui-code-block mode="diff" [filename]="agentCopy.codeFile" [diff]="codeDiff" />
+    </div>
+  </section>
+
+  <section class="demo__section">
+    <h2 class="demo__heading">Inline tokens</h2>
+    <p class="demo__caption"><code>bui-entity-chip</code> and <code>bui-value-pill</code> sit inside running text.</p>
+    <div class="demo__row">
+      @for (entity of entities; track entity.name) {
+        <bui-entity-chip [name]="entity.name" [color]="entity.color" [monogram]="entity.monogram" />
+      }
+    </div>
+    <div class="demo__row">
+      @for (tone of tones; track tone) {
+        <bui-value-pill [tone]="tone">{{ tone }}</bui-value-pill>
+      }
+    </div>
+  </section>
+
+  <section class="demo__section">
     <h2 class="demo__heading">Button</h2>
-    <p class="demo__caption"><code>bui-button</code> in five variants and three sizes.</p>
+    <p class="demo__caption"><code>bui-button</code> in six variants and three sizes.</p>
     @for (size of buttonSizes; track size) {
       <div class="demo__row">
         @for (variant of buttonVariants; track variant) {

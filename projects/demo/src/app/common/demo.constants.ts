@@ -1,5 +1,251 @@
-import { BUI_ICON_SIZE, BUI_ICONS, BuiAction, BuiButtonSize, BuiButtonVariant, BuiChipOption, BuiMenuItem } from 'ngx-beautiful-ui';
-import { DemoTable } from './demo.types';
+import {
+  BUI_ICON_SIZE,
+  BUI_ICONS,
+  BuiAction,
+  BuiApprovalQuestion,
+  BuiButtonSize,
+  BuiButtonVariant,
+  BuiChipOption,
+  BuiContextChunk,
+  BuiDiffRow,
+  BuiFileDiff,
+  BuiMenuItem,
+  BuiSource,
+  BuiTask,
+  BuiTone,
+  BuiToolStep
+} from 'ngx-beautiful-ui';
+import { DemoEntity, DemoTable } from './demo.types';
+
+const demoAvatar = (fill: string, shape: string): string =>
+  `data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="${fill}"/>${shape}</svg>`)}`;
+
+export const DEMO_AGENT_TIMING = {
+  stepMs: 700,
+  failMs: 2400,
+  doneMs: 3800
+} as const;
+
+export const DEMO_AGENT_COPY = {
+  toolHeading: '4 tool calls, 3 files',
+  toolMore: '+2 more',
+  replay: 'Replay',
+  recommendationHeading: 'Want me to publish this release?',
+  contextCount: 12,
+  approvalShow: 'Show the approval card again',
+  approvalDismissed: 'Approval card dismissed.',
+  approvalWaiting: 'Answers appear here after you send them.',
+  answerEmpty: '—',
+  answerSeparator: ' · ',
+  codeFile: 'format-elapsed.ts'
+} as const;
+
+export const DEMO_SEQUENCE_TASK_ID = 'docs';
+
+export const DEMO_TOOL_STEPS: BuiToolStep[] = [
+  {
+    id: 'think',
+    icon: BUI_ICONS.sparkle,
+    label: 'Thinking',
+    chip: 'Planning the token migration…',
+    detail: [{ text: 'Colour tokens are referenced in 14 components.' }, { text: 'Spacing already follows the 2px scale, so it can stay.' }]
+  },
+  {
+    id: 'write',
+    icon: BUI_ICONS.pencil,
+    label: 'Write 86 lines',
+    chip: '_tokens.scss',
+    mono: true,
+    detailMono: true,
+    detail: [
+      { text: '+ --bui-warning: oklch(0.689 0.179 49.9);', tone: 'add' },
+      { text: '+ --bui-warning-soft: oklch(0.964 0.021 67.6);', tone: 'add' }
+    ]
+  },
+  {
+    id: 'run',
+    icon: BUI_ICONS.terminal,
+    label: 'Build and verify',
+    chip: 'npm run build',
+    mono: true,
+    detailMono: true,
+    detail: [{ text: '✓ built in 1.4s' }, { text: '✓ 0 lint errors' }]
+  },
+  {
+    id: 'read',
+    icon: BUI_ICONS.file,
+    label: 'Read image',
+    chip: 'contrast-audit.png',
+    mono: true,
+    detail: [{ text: '1280 × 720 · colour contrast report.' }, { text: 'Two tokens fall below 4.5:1 on white.' }]
+  }
+];
+
+export const DEMO_TOOL_FILES: BuiFileDiff[] = [
+  {
+    file: '_tokens.scss',
+    added: 12,
+    removed: 0,
+    lines: [
+      { text: ':root {', tone: 'ctx' },
+      { text: '  --bui-warning: oklch(0.689 0.179 49.9);', tone: 'add' },
+      { text: '  --bui-warning-soft: oklch(0.964 0.021 67.6);', tone: 'add' },
+      { text: '}', tone: 'ctx' }
+    ]
+  },
+  {
+    file: 'task-rows.scss',
+    added: 18,
+    removed: 6,
+    lines: [
+      { text: '.bui-task-rows__row {', tone: 'ctx' },
+      { text: '  border-radius: 22px;', tone: 'del' },
+      { text: '  border-radius: var(--bui-task-radius);', tone: 'add' },
+      { text: '}', tone: 'ctx' }
+    ]
+  },
+  {
+    file: 'README.md',
+    added: 4,
+    removed: 1,
+    lines: [
+      { text: '## Theming', tone: 'ctx' },
+      { text: 'Colours are hard-coded.', tone: 'del' },
+      { text: 'Every colour is a --bui-* token.', tone: 'add' }
+    ]
+  }
+];
+
+export const DEMO_TASKS: BuiTask[] = [
+  {
+    id: 'audit',
+    label: 'Audit colour tokens',
+    meta: '42 tokens',
+    status: 'done',
+    details: [
+      { label: 'Matched usages across components', meta: '42/42' },
+      { label: 'Flagged low-contrast pairs', meta: '2' }
+    ]
+  },
+  {
+    id: 'migrate',
+    label: 'Migrate components',
+    meta: '9 files',
+    status: 'running',
+    step: 2,
+    details: [
+      { label: 'Replacing hard-coded values', meta: '6 files' },
+      { label: 'Rebuilding styles', meta: '68%' }
+    ]
+  },
+  {
+    id: DEMO_SEQUENCE_TASK_ID,
+    label: 'Update documentation',
+    meta: '2 pages',
+    status: 'pending',
+    step: 3,
+    details: [
+      { label: 'Theming guide', meta: 'draft' },
+      { label: 'Migration notes', meta: 'draft' }
+    ]
+  }
+];
+
+export const DEMO_APPROVAL_QUESTIONS: BuiApprovalQuestion[] = [
+  { id: 'theme', question: 'Which theme should ship first?', type: 'single', options: ['Light only', 'Dark only', 'Both together'] },
+  {
+    id: 'components',
+    question: 'Which components need a dark variant?',
+    type: 'multiple',
+    options: ['Prompt bar', 'Markdown', 'Code block']
+  },
+  { id: 'release', question: 'When should we release?', type: 'single', options: ['This week', 'Next sprint', 'After review'] }
+];
+
+export const DEMO_RECOMMENDATION_FALLBACK = 'Hold the release until the dark theme is ready.';
+
+export const DEMO_CONTEXT_CHUNKS: BuiContextChunk[] = [
+  {
+    id: 'naming',
+    title: 'Token naming rule',
+    meta: '290 characters',
+    body: 'Every design token starts with the --bui- prefix and names its role, never its value.',
+    source: 'Design Tokens Guide.pdf',
+    badge: 'PDF',
+    badgeTone: 'danger'
+  },
+  {
+    id: 'inventory',
+    title: 'Component inventory',
+    meta: '1,250 characters',
+    body: 'The prompt bar, markdown and code block cover most chat screens; the rest are situational.',
+    source: 'components.csv',
+    badge: 'CSV',
+    badgeTone: 'success'
+  }
+];
+
+export const DEMO_SOURCES: BuiSource[] = [
+  {
+    name: 'Signals guide',
+    domain: 'angular.dev',
+    href: 'https://angular.dev/guide/signals',
+    image: demoAvatar('#c2185b', '<circle cx="32" cy="32" r="14" fill="#fff"/>')
+  },
+  {
+    name: 'Using CSS custom properties',
+    domain: 'developer.mozilla.org',
+    href: 'https://developer.mozilla.org/docs/Web/CSS/Using_CSS_custom_properties',
+    image: demoAvatar('#2f6fec', '<path d="M17 45V25h8v20h-8Zm11 0V16h8v29h-8Zm11 0V30h8v15h-8Z" fill="#fff"/>')
+  },
+  {
+    name: 'Beautiful UI',
+    domain: 'beautifului.dev',
+    href: 'https://www.beautifului.dev',
+    image: demoAvatar(
+      '#1f7a5f',
+      '<path d="M15 43 27 31l8 7 14-18" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>'
+    )
+  }
+];
+
+export const DEMO_CODE_LINES: string[] = [
+  'export function formatElapsed(ms: number) {',
+  '  const seconds = Math.floor(ms / 1000);',
+  '  if (seconds < 60) return `${seconds}s`;',
+  '  const minutes = Math.floor(seconds / 60);',
+  '  return `${minutes}m ${seconds % 60}s`;',
+  '}'
+];
+
+export const DEMO_CODE_DIFF: BuiDiffRow[] = [
+  { old: 1, cur: 1, type: 'ctx', pieces: [{ text: 'export function formatElapsed(ms: number) {' }] },
+  { old: 2, cur: 2, type: 'ctx', pieces: [{ text: '  const seconds = Math.floor(ms / 1000);' }] },
+  {
+    old: 3,
+    cur: null,
+    type: 'del',
+    pieces: [{ text: '  if (seconds < ' }, { text: '90', change: 'del' }, { text: ') return `${seconds}s`;' }]
+  },
+  {
+    old: null,
+    cur: 3,
+    type: 'add',
+    pieces: [{ text: '  if (seconds < ' }, { text: '60', change: 'add' }, { text: ') return `${seconds}s`;' }]
+  },
+  { old: 4, cur: 4, type: 'ctx', pieces: [{ text: '  const minutes = Math.floor(seconds / 60);' }] },
+  { old: null, cur: 5, type: 'add', pieces: [{ text: '  if (minutes >= 60) return `${Math.floor(minutes / 60)}h`;' }] },
+  { old: 5, cur: 6, type: 'ctx', pieces: [{ text: '  return `${minutes}m ${seconds % 60}s`;' }] },
+  { old: 6, cur: 7, type: 'ctx', pieces: [{ text: '}' }] }
+];
+
+export const DEMO_TONES: BuiTone[] = ['neutral', 'success', 'warning', 'danger', 'accent'];
+
+export const DEMO_ENTITIES: DemoEntity[] = [
+  { name: 'Design team', color: null, monogram: null },
+  { name: 'Release bot', color: '#2f6fec', monogram: 'R' },
+  { name: 'QA', color: '#1f7a5f', monogram: null }
+];
 
 export const DEMO_LINKS = {
   repository: 'https://github.com/djordjejanjic/ngx-beautiful-ui',
@@ -96,7 +342,7 @@ export const DEMO_CHIP_OPTIONS: BuiChipOption[] = [
   { value: 'playful', label: 'Playful', disabled: true }
 ];
 
-export const DEMO_BUTTON_VARIANTS: BuiButtonVariant[] = ['primary', 'secondary', 'ghost', 'accent', 'quiet'];
+export const DEMO_BUTTON_VARIANTS: BuiButtonVariant[] = ['primary', 'secondary', 'ghost', 'accent', 'success', 'quiet'];
 
 export const DEMO_BUTTON_SIZES: BuiButtonSize[] = ['xs', 'sm', 'md'];
 

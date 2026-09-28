@@ -1,5 +1,5 @@
 import type { Config } from 'dompurify';
-import { BuiAttachmentStatus, BuiMenuPlacement } from './bui.types';
+import { BuiApprovalDirection, BuiApprovalStatus, BuiApprovalType, BuiAttachmentStatus, BuiDiffTone, BuiMenuPlacement } from './bui.types';
 
 const buiSvg = (markup: string): string => `data:image/svg+xml,${encodeURIComponent(markup)}`;
 
@@ -10,14 +10,23 @@ export const BUI_ICONS = {
   arrowUp: buiSvg(
     '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>'
   ),
+  arrowUpRight: buiSvg(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>'
+  ),
   check: buiSvg(
     '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>'
   ),
   chevronDown: buiSvg(
     '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>'
   ),
+  chevronUp: buiSvg(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>'
+  ),
   close: buiSvg(
     '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>'
+  ),
+  code: buiSvg(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5"/></svg>'
   ),
   copy: buiSvg(
     '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2.5"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>'
@@ -30,6 +39,9 @@ export const BUI_ICONS = {
   ),
   image: buiSvg(
     '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.09-3.09a2 2 0 0 0-2.82 0L6 21"/></svg>'
+  ),
+  lines: buiSvg(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>'
   ),
   more: buiSvg(
     '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg>'
@@ -52,6 +64,9 @@ export const BUI_ICONS = {
   stop: buiSvg(
     '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2.5"/></svg>'
   ),
+  terminal: buiSvg(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17l6-5-6-5M12 19h8"/></svg>'
+  ),
   thumbDown: buiSvg(
     '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 14V2M9 18.12L10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88z"/></svg>'
   ),
@@ -64,6 +79,7 @@ export const BUI_ICONS = {
 } as const;
 
 export const BUI_ICON_SIZE = {
+  tiny: '9px',
   xxs: '10px',
   xs: '11px',
   sm: '12px',
@@ -84,8 +100,100 @@ export const BUI_LABELS = {
   stop: 'Stop',
   addAttachments: 'Add attachments',
   removeAttachment: 'Remove',
-  table: 'Scrollable table'
+  table: 'Scrollable table',
+  contextHeading: 'All chunks',
+  alternatives: 'Alternatives',
+  otherOptions: 'Other options',
+  accepted: 'Accepted',
+  completed: 'Completed',
+  failed: 'Failed',
+  showDiff: 'Show diff for',
+  copy: 'Copy',
+  copied: 'Copied',
+  copyCode: 'Copy code',
+  sources: 'sources',
+  skip: 'Skip',
+  continue: 'Continue',
+  sendAnswers: 'Send',
+  customAnswerPlaceholder: 'Something else…',
+  customAnswer: 'Custom answer',
+  answersSent: 'Answers sent',
+  startOver: 'Start over',
+  dismiss: 'Dismiss',
+  previousQuestion: 'Previous question',
+  nextQuestion: 'Next question'
 } as const;
+
+export const BUI_SIGNAL_METER_BARS = 3;
+
+export const BUI_DIFF_SIGNS: Readonly<Record<BuiDiffTone, string>> = {
+  add: '+',
+  del: '−',
+  ctx: ' '
+};
+
+export const BUI_DIFF_PREVIEW = {
+  width: 288,
+  margin: 12,
+  offset: 6,
+  headerHeight: 38,
+  lineHeight: 19
+} as const;
+
+export const BUI_TOOL_CHIPS_FILE_CLASS = 'bui-tool-chips__file';
+
+export const BUI_POPOVER_OPEN_SELECTOR = ':popover-open';
+
+export const BUI_CODE_KEYWORDS: ReadonlySet<string> = new Set([
+  'import',
+  'from',
+  'export',
+  'default',
+  'async',
+  'function',
+  'const',
+  'let',
+  'var',
+  'await',
+  'return',
+  'if',
+  'else',
+  'for',
+  'while',
+  'new',
+  'throw',
+  'try',
+  'catch',
+  'null',
+  'true',
+  'false',
+  'undefined'
+]);
+
+export const BUI_CODE_TOKEN_REGEXP =
+  /("(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|`[^`]*`|\b\d+(?:\.\d+)?\b|\b(?:import|from|export|default|async|function|const|let|var|await|return|if|else|for|while|new|throw|try|catch|null|true|false|undefined)\b|[A-Za-z_$][\w$]*(?=\s*\())/g;
+
+export const BUI_CODE_LITERAL_REGEXP = /^["'`\d]/;
+
+export const BUI_COPY_RESET_MS = 1500;
+
+export const BUI_APPROVAL_ADVANCE_MS = 480;
+
+export const BUI_APPROVAL_DIRECTION = {
+  forward: 'forward',
+  back: 'back'
+} as const satisfies Record<BuiApprovalDirection, BuiApprovalDirection>;
+
+export const BUI_APPROVAL_STATUS = {
+  open: 'open',
+  sent: 'sent',
+  closed: 'closed'
+} as const satisfies Record<BuiApprovalStatus, BuiApprovalStatus>;
+
+export const BUI_APPROVAL_TYPE = {
+  single: 'single',
+  multiple: 'multiple'
+} as const satisfies Record<BuiApprovalType, BuiApprovalType>;
 
 export const BUI_LOADER_CELL_DELAYS_MS: readonly number[] = [90, 180, 270, 0, 90, 180, 90, 180, 270];
 

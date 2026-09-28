@@ -1,0 +1,110 @@
+@switch (status()) {
+  @case (statuses.sent) {
+    <div class="bui-approval-card__sent">
+      <span class="bui-approval-card__sent-pill">
+        <span class="bui-approval-card__sent-check">
+          <bui-icon [src]="icons.check" [size]="iconSize.xs" />
+        </span>
+        {{ sentLabel() }}
+      </span>
+      @if (resettable()) {
+        <button type="button" class="bui-approval-card__start-over" (click)="reset()">{{ startOverLabel() }}</button>
+      }
+    </div>
+  }
+  @case (statuses.open) {
+    <div class="bui-approval-card">
+      <button type="button" class="bui-approval-card__dismiss" [attr.aria-label]="dismissLabel()" (click)="dismiss()">
+        <bui-icon [src]="icons.close" [size]="iconSize.md" />
+      </button>
+
+      <div class="bui-approval-card__content">
+        <div
+          class="bui-approval-card__viewport"
+          aria-live="polite"
+          [class.bui-approval-card__viewport--back]="direction() === directions.back">
+          @for (question of activeList(); track question.id) {
+            <div
+              class="bui-approval-card__question"
+              animate.enter="bui-approval-card__question--enter"
+              animate.leave="bui-approval-card__question--leave">
+              <p class="bui-approval-card__prompt">{{ question.question }}</p>
+              <div
+                class="bui-approval-card__options"
+                [attr.role]="question.type === types.single ? 'radiogroup' : 'group'"
+                [attr.aria-label]="question.question">
+                @for (option of optionViews(); track option.label) {
+                  <button
+                    type="button"
+                    class="bui-approval-card__option"
+                    [class.bui-approval-card__option--selected]="option.selected"
+                    [attr.role]="question.type === types.single ? 'radio' : 'checkbox'"
+                    [attr.aria-checked]="option.selected"
+                    (click)="toggle(option.label)">
+                    <span
+                      class="bui-approval-card__control"
+                      aria-hidden="true"
+                      [class.bui-approval-card__control--radio]="question.type === types.single">
+                      @if (question.type === types.single) {
+                        <span class="bui-approval-card__dot"></span>
+                      } @else {
+                        <bui-icon [src]="icons.check" [size]="iconSize.sm" />
+                      }
+                    </span>
+                    <span class="bui-approval-card__option-label">{{ option.label }}</span>
+                  </button>
+                }
+                @if (allowCustom()) {
+                  <label class="bui-approval-card__option bui-approval-card__option--custom">
+                    <input
+                      #customInput
+                      type="text"
+                      class="bui-approval-card__input"
+                      [value]="customText()"
+                      [placeholder]="customPlaceholder()"
+                      [attr.aria-label]="customAnswerLabel()"
+                      (input)="setCustom(customInput.value)"
+                      (keydown.enter)="submitCustom($event)" />
+                  </label>
+                }
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="bui-approval-card__footer">
+        <div class="bui-approval-card__stepper">
+          <button
+            type="button"
+            class="bui-approval-card__step-button"
+            [attr.aria-label]="previousLabel()"
+            [disabled]="index() === 0"
+            (click)="goTo(index() - 1)">
+            <bui-icon [src]="icons.chevronUp" [size]="iconSize.md" />
+          </button>
+          <span class="bui-approval-card__count" [class.bui-approval-card__count--back]="direction() === directions.back">
+            @for (label of stepLabels(); track label) {
+              <span class="bui-approval-card__count-value" animate.enter="bui-approval-card__count-value--enter">{{ label }}</span>
+            }
+          </span>
+          <button
+            type="button"
+            class="bui-approval-card__step-button"
+            [attr.aria-label]="nextLabel()"
+            [disabled]="isLast()"
+            (click)="goTo(index() + 1)">
+            <bui-icon [src]="icons.chevronDown" [size]="iconSize.md" />
+          </button>
+        </div>
+
+        <div class="bui-approval-card__actions">
+          <bui-button variant="ghost" size="sm" (clicked)="skip()">{{ skipLabel() }}</bui-button>
+          <bui-button variant="accent" size="sm" [disabled]="!hasAnswer()" (clicked)="advance()">
+            {{ isLast() ? sendLabel() : continueLabel() }}
+          </bui-button>
+        </div>
+      </div>
+    </div>
+  }
+}

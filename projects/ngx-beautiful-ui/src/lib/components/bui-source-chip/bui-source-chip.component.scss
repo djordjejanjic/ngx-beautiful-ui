@@ -1,0 +1,38 @@
+:host {
+  display: inline;
+}
+
+.bui-source-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--bui-space-2);
+  height: var(--bui-source-chip-height);
+  margin-right: var(--bui-space-2);
+  padding: 0 3px;
+  border-radius: var(--bui-radius-xs);
+  background: var(--bui-inset);
+  box-shadow: var(--bui-shadow-hairline);
+  color: var(--bui-text-muted);
+  font-family: var(--bui-font-mono);
+  font-size: var(--bui-font-size-2xs);
+  line-height: 1;
+  text-decoration: none;
+  vertical-align: middle;
+  translate: 0 -1px;
+  animation: bui-pop-in var(--bui-duration-base) var(--bui-ease-out) backwards;
+  transition:
+    background-color var(--bui-duration-fast) ease,
+    color var(--bui-duration-fast) ease;
+
+  &:hover {
+    background: var(--bui-hover);
+    color: var(--bui-text);
+  }
+
+  &__avatar {
+    width: var(--bui-source-avatar-size);
+    height: var(--bui-source-avatar-size);
+    border-radius: 3px;
+    box-shadow: var(--bui-avatar-ring);
+  }
+}

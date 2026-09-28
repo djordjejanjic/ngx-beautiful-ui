@@ -1,0 +1,50 @@
+@if (active(); as active) {
+  <div class="bui-recommendation-card">
+    <div class="bui-recommendation-card__content">
+      <span class="bui-recommendation-card__heading">{{ heading() }}</span>
+      @for (option of activeKeys(); track option.id) {
+        <p class="bui-recommendation-card__body">
+          @if (option.template) {
+            <ng-container [ngTemplateOutlet]="option.template" />
+          } @else {
+            {{ option.text }}
+          }
+        </p>
+      }
+    </div>
+
+    @if (others().length) {
+      <div class="bui-collapse" [class.bui-collapse--open]="alternativesOpen()" [attr.inert]="alternativesOpen() ? null : ''">
+        <div>
+          <div class="bui-recommendation-card__drawer">
+            <p class="bui-recommendation-card__drawer-label">{{ otherOptionsLabel() }}</p>
+            @for (option of others(); track option.id) {
+              <button type="button" class="bui-recommendation-card__option" (click)="select(option.id)">
+                <bui-signal-meter [level]="option.signal" [tone]="option.tone" />
+                <span class="bui-recommendation-card__option-summary">{{ option.summary }}</span>
+                <span class="bui-recommendation-card__option-label">{{ option.label }}</span>
+              </button>
+            }
+          </div>
+        </div>
+      </div>
+    }
+
+    <div class="bui-recommendation-card__footer">
+      <span class="bui-recommendation-card__status">
+        <bui-signal-meter [level]="active.signal" [tone]="active.tone" />
+        <span class="bui-recommendation-card__status-label">{{ active.label }}</span>
+      </span>
+      <span class="bui-recommendation-card__actions">
+        @if (others().length) {
+          <bui-button variant="secondary" size="sm" [ariaExpanded]="alternativesOpen()" (clicked)="toggleAlternatives()">
+            {{ alternativesLabel() }}
+          </bui-button>
+        }
+        <bui-button size="sm" [variant]="isAccepted() ? 'success' : (active.ctaVariant ?? 'primary')" (clicked)="accept()">
+          {{ isAccepted() ? acceptedLabel() : active.cta }}
+        </bui-button>
+      </span>
+    </div>
+  </div>
+}

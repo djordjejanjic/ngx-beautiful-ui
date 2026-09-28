@@ -1,0 +1,59 @@
+<div class="bui-code-block">
+  <div class="bui-code-block__header">
+    <span class="bui-code-block__file">
+      <bui-icon class="bui-code-block__file-icon" [src]="icons.code" [size]="iconSize.base" />
+      <span class="bui-code-block__filename">{{ filename() }}</span>
+    </span>
+
+    @if (mode() === 'diff') {
+      <span class="bui-code-block__stat">
+        <span class="bui-code-block__added">+{{ stats().added }}</span>
+        <span class="bui-code-block__removed">-{{ stats().removed }}</span>
+      </span>
+    } @else {
+      <button
+        type="button"
+        class="bui-code-block__copy"
+        [class.bui-code-block__copy--done]="isCopied()"
+        [attr.aria-label]="copyAriaLabel()"
+        (click)="copy()">
+        <bui-icon [src]="isCopied() ? icons.check : icons.copy" [size]="iconSize.xs" />
+        {{ isCopied() ? copiedLabel() : copyLabel() }}
+      </button>
+    }
+  </div>
+
+  <div class="bui-code-block__body">
+    <span class="bui-code-block__rule" aria-hidden="true"></span>
+    @if (mode() === 'diff') {
+      @for (row of diffRows(); track $index) {
+        <div class="bui-code-block__line" [attr.data-change]="row.type">
+          @if (row.type !== 'ctx') {
+            <span class="bui-code-block__bar" aria-hidden="true"></span>
+          }
+          <span class="bui-code-block__number">{{ row.number }}</span>
+          <code class="bui-code-block__code">
+            @for (piece of row.pieces; track $index) {
+              <span class="bui-code-block__piece" [attr.data-change]="piece.change">
+                @for (token of piece.tokens; track $index) {
+                  <span class="bui-code-block__token" [attr.data-kind]="token.kind">{{ token.text }}</span>
+                }
+              </span>
+            }
+          </code>
+        </div>
+      }
+    } @else {
+      @for (line of codeLines(); track line.number) {
+        <div class="bui-code-block__line">
+          <span class="bui-code-block__number">{{ line.number }}</span>
+          <code class="bui-code-block__code">
+            @for (token of line.tokens; track $index) {
+              <span class="bui-code-block__token" [attr.data-kind]="token.kind">{{ token.text }}</span>
+            }
+          </code>
+        </div>
+      }
+    }
+  </div>
+</div>

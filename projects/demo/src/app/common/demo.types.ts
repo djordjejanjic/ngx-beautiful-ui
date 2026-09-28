@@ -23,6 +23,12 @@ export type DemoMessage = DemoUserMessage | DemoAssistantMessage;
 
 export type DemoAssistantPatch = Partial<Pick<DemoAssistantMessage, 'phase' | 'thinkingMs' | 'markdown'>>;
 
+export interface DemoEntity {
+  name: string;
+  color: string | null;
+  monogram: string | null;
+}
+
 export interface DemoTable {
   header: string[];
   align: BuiTableAlign[];

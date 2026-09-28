@@ -1,0 +1,34 @@
+:host {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--bui-space-2);
+  margin: 0 var(--bui-space-1);
+  padding: 1px var(--bui-space-3) 1px 3px;
+  border-radius: var(--bui-radius-pill);
+  background: var(--bui-field);
+  box-shadow: var(--bui-shadow-hairline);
+  vertical-align: middle;
+}
+
+.bui-entity-chip {
+  &__mark {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: var(--bui-monogram-size);
+    height: var(--bui-monogram-size);
+    border-radius: var(--bui-radius-pill);
+    background: var(--bui-monogram);
+    color: var(--bui-on-accent);
+    font-size: var(--bui-font-size-monogram);
+    font-weight: var(--bui-font-weight-semibold);
+    line-height: 1;
+  }
+
+  &__name {
+    color: var(--bui-text);
+    font-size: var(--bui-font-size-body-xs);
+    font-weight: var(--bui-font-weight-medium);
+  }
+}

@@ -1,0 +1,196 @@
+:host {
+  display: block;
+}
+
+.bui-code-block {
+  width: 100%;
+  max-width: var(--bui-code-block-max-width);
+  overflow: hidden;
+  border-radius: var(--bui-radius-lg);
+  background: var(--bui-surface);
+  box-shadow: var(--bui-shadow-card);
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: var(--bui-space-4);
+    height: var(--bui-task-row-height);
+    padding: 0 var(--bui-space-8);
+    border-bottom: 1px solid var(--bui-border);
+    font-size: var(--bui-font-size-sm);
+  }
+
+  &__file {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    min-width: 0;
+  }
+
+  &__file-icon {
+    flex-shrink: 0;
+    color: var(--bui-text-faint);
+  }
+
+  &__filename {
+    overflow: hidden;
+    color: var(--bui-text);
+    font-family: var(--bui-font-mono);
+    line-height: 1;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__stat {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--bui-space-4);
+    margin-left: auto;
+    font-family: var(--bui-font-mono);
+    font-size: var(--bui-font-size-body-xs);
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+  }
+
+  &__added {
+    color: var(--bui-success);
+  }
+
+  &__removed {
+    color: var(--bui-danger);
+  }
+
+  &__copy {
+    display: flex;
+    align-items: center;
+    gap: var(--bui-space-2);
+    height: var(--bui-space-12);
+    margin: 0 calc(-1 * var(--bui-space-2)) 0 auto;
+    padding: 0 var(--bui-space-3);
+    border: 0;
+    border-radius: var(--bui-radius-sm);
+    background: transparent;
+    color: var(--bui-text-faint);
+    font: inherit;
+    font-size: var(--bui-font-size-body-xs);
+    font-weight: var(--bui-font-weight-medium);
+    cursor: pointer;
+    transition:
+      background-color var(--bui-duration-instant) ease,
+      color var(--bui-duration-instant) ease;
+
+    &:hover {
+      background: var(--bui-hover);
+      color: var(--bui-text);
+    }
+
+    &--done,
+    &--done:hover {
+      color: var(--bui-success);
+    }
+  }
+
+  &__body {
+    position: relative;
+    padding: var(--bui-space-6) 0;
+    color: var(--bui-text-muted);
+    font-family: var(--bui-font-mono);
+    font-size: var(--bui-font-size-sm);
+    line-height: 1.65;
+  }
+
+  &__rule {
+    position: absolute;
+    top: var(--bui-space-6);
+    bottom: var(--bui-space-6);
+    left: var(--bui-code-gutter);
+    width: 1px;
+    background: var(--bui-border);
+    pointer-events: none;
+  }
+
+  &__line {
+    position: relative;
+    display: grid;
+    grid-template-columns: var(--bui-code-gutter) minmax(0, 1fr);
+    align-items: start;
+
+    &[data-change='add'] {
+      background: var(--bui-success-soft);
+    }
+
+    &[data-change='del'] {
+      background: var(--bui-danger-soft);
+    }
+  }
+
+  &__bar {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 3px;
+    background: var(--bui-success);
+  }
+
+  &__line[data-change='del'] &__bar {
+    background: repeating-linear-gradient(45deg, var(--bui-danger) 0, var(--bui-danger) 1.5px, transparent 1.5px, transparent 3px);
+  }
+
+  &__number {
+    color: var(--bui-text-faint);
+    font-size: var(--bui-font-size-caption);
+    text-align: center;
+    user-select: none;
+  }
+
+  &__line[data-change='add'] &__number {
+    color: var(--bui-success);
+  }
+
+  &__line[data-change='del'] &__number {
+    color: var(--bui-danger);
+  }
+
+  &__code {
+    padding: 0 var(--bui-space-6) 0 var(--bui-space-2);
+    font-family: inherit;
+    font-size: inherit;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+  }
+
+  &__piece {
+    &[data-change='add'],
+    &[data-change='del'] {
+      margin: 0 -1px;
+      padding: 0 2px;
+      border-radius: 3px;
+      -webkit-box-decoration-break: clone;
+      box-decoration-break: clone;
+    }
+
+    &[data-change='add'] {
+      background: color-mix(in srgb, var(--bui-success) 18%, transparent);
+    }
+
+    &[data-change='del'] {
+      background: color-mix(in srgb, var(--bui-danger) 18%, transparent);
+    }
+  }
+
+  &__token {
+    &[data-kind='literal'] {
+      color: var(--bui-code-literal);
+    }
+
+    &[data-kind='keyword'] {
+      color: var(--bui-code-keyword);
+    }
+
+    &[data-kind='call'] {
+      color: var(--bui-code-function);
+      font-weight: var(--bui-font-weight-medium);
+    }
+  }
+}

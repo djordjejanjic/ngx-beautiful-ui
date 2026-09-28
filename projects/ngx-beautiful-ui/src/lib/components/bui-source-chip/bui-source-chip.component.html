@@ -1,0 +1,6 @@
+<a class="bui-source-chip" target="_blank" rel="noopener noreferrer" [href]="source().href" [title]="source().name">
+  @if (source().image) {
+    <img class="bui-source-chip__avatar" alt="" [src]="source().image" />
+  }
+  <span class="bui-source-chip__domain">{{ source().domain }}</span>
+</a>

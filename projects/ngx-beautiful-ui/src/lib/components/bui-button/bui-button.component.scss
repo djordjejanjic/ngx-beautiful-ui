@@ -78,6 +78,16 @@
     }
   }
 
+  &--success {
+    background: var(--bui-success);
+    box-shadow: var(--bui-shadow-filled);
+    color: var(--bui-on-accent);
+
+    &:hover {
+      filter: brightness(0.95);
+    }
+  }
+
   &--quiet {
     background: transparent;
     color: var(--bui-text);

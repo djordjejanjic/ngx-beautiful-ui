@@ -1,0 +1,71 @@
+<div class="bui-task-rows" [class.bui-task-rows--list]="layout() === 'list'">
+  @for (task of views(); track task.id; let index = $index) {
+    <div class="bui-task-rows__row" [class.bui-task-rows__row--open]="task.expanded" [style.--bui-stagger-index]="index">
+      <button type="button" class="bui-task-rows__header" [attr.aria-expanded]="task.expanded" (click)="toggle(task.id)">
+        <span class="bui-task-rows__status">
+          @switch (task.status) {
+            @case ('done') {
+              <span class="bui-task-rows__badge bui-task-rows__badge--success">
+                <bui-icon [src]="icons.check" [size]="iconSize.sm" />
+              </span>
+            }
+            @case ('failed') {
+              <span class="bui-task-rows__badge bui-task-rows__badge--danger">
+                <bui-icon [src]="icons.close" [size]="iconSize.xs" />
+              </span>
+            }
+            @default {
+              <span class="bui-task-rows__ring" [class.bui-task-rows__ring--active]="task.status === 'running'">
+                <svg class="bui-task-rows__ring-svg" viewBox="0 0 24 24" aria-hidden="true">
+                  <circle class="bui-task-rows__ring-track" cx="12" cy="12" r="11" />
+                  @if (task.status === 'running') {
+                    <circle class="bui-task-rows__ring-arc" cx="12" cy="12" r="11" />
+                  }
+                </svg>
+                <span class="bui-task-rows__step">{{ task.step }}</span>
+              </span>
+            }
+          }
+        </span>
+        <span class="bui-task-rows__label">{{ task.label }}</span>
+        @if (task.meta) {
+          <span class="bui-task-rows__meta">{{ task.meta }}</span>
+        }
+        @switch (task.status) {
+          @case ('done') {
+            <span class="bui-task-rows__pill bui-task-rows__pill--success">{{ completedLabel() }}</span>
+          }
+          @case ('failed') {
+            <span class="bui-task-rows__pill bui-task-rows__pill--danger">
+              {{ failedLabel() }}
+              <bui-icon class="bui-task-rows__retry" [src]="icons.retry" [size]="iconSize.sm" />
+            </span>
+          }
+        }
+        <span class="bui-task-rows__chevron" aria-hidden="true">
+          <bui-icon [src]="icons.chevronDown" [size]="iconSize.base" />
+        </span>
+      </button>
+
+      @if (task.details.length) {
+        <div class="bui-collapse" [class.bui-collapse--open]="task.expanded">
+          <div>
+            <div class="bui-task-rows__details">
+              <span class="bui-task-rows__rail" aria-hidden="true"></span>
+              <div class="bui-task-rows__detail-list">
+                @for (detail of task.details; track $index) {
+                  <div class="bui-task-rows__detail" [style.--bui-stagger-index]="$index">
+                    <span class="bui-task-rows__detail-label">{{ detail.label }}</span>
+                    @if (detail.meta) {
+                      <span class="bui-task-rows__detail-meta">{{ detail.meta }}</span>
+                    }
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>
