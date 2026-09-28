@@ -1,12 +1,18 @@
 # ngx-beautiful-ui
 
+[![npm version](https://img.shields.io/npm/v/ngx-beautiful-ui?color=cb3837&logo=npm)](https://www.npmjs.com/package/ngx-beautiful-ui)
+[![Angular](https://img.shields.io/badge/Angular-21.2%2B-dd0031?logo=angular)](https://angular.dev)
+[![license](https://img.shields.io/npm/l/ngx-beautiful-ui)](https://github.com/djordjejanjic/ngx-beautiful-ui/blob/main/LICENSE)
+[![demo](https://github.com/djordjejanjic/ngx-beautiful-ui/actions/workflows/deploy-demo.yml/badge.svg)](https://djordjejanjic.github.io/ngx-beautiful-ui/)
+
 An unofficial Angular port of [Beautiful UI](https://www.beautifului.dev), the copy-paste React primitives for AI-native interfaces by
 [Shane Levine](https://github.com/slev12397/beautiful-ui) (built by [Turbo](https://turbodesign.co)).
 
 Standalone components, signal inputs, `OnPush` everywhere, and plain SCSS driven by `--bui-*` CSS custom properties. There is no Tailwind
 and no UI framework dependency.
 
-**[Live demo](https://djordjejanjic.github.io/ngx-beautiful-ui/)**
+**[Live demo](https://djordjejanjic.github.io/ngx-beautiful-ui/)** ·
+**[Open in StackBlitz](https://stackblitz.com/github/djordjejanjic/ngx-beautiful-ui?file=projects%2Fdemo%2Fsrc%2Fapp%2Fapp.html)**
 
 > This project is not affiliated with or endorsed by the original authors. The port was produced with AI assistance. Issues and pull
 > requests are welcome.
