@@ -6,6 +6,8 @@ An unofficial Angular port of [Beautiful UI](https://www.beautifului.dev), the c
 Standalone components, signal inputs, `OnPush` everywhere, and plain SCSS driven by `--bui-*` CSS custom properties. There is no Tailwind
 and no UI framework dependency.
 
+**[Live demo](https://djordjejanjic.github.io/ngx-beautiful-ui/)**
+
 > This project is not affiliated with or endorsed by the original authors. The port was produced with AI assistance. Issues and pull
 > requests are welcome.
 
@@ -57,15 +59,11 @@ The package also exports `BuiClickOutsideDirective`, `BuiStickToBottomDirective`
 
 ## Installation
 
-The package is not on npm yet. Until it is, build it from source:
-
 ```bash
-git clone https://github.com/djordjejanjic/ngx-beautiful-ui.git
-cd ngx-beautiful-ui
-npm install
-npm run build:lib
-npm install ../ngx-beautiful-ui/dist/ngx-beautiful-ui --prefix ../your-app
+npm install ngx-beautiful-ui
 ```
+
+`marked` and `dompurify` come along as dependencies.
 
 Then add the styles once, either in `angular.json`:
 
@@ -105,13 +103,13 @@ export class ChatComponent {
 }
 ```
 
-The [demo app](projects/demo/src/app) composes every primitive into a scripted conversation and is the best reference for wiring them
+The [demo app](https://github.com/djordjejanjic/ngx-beautiful-ui/tree/main/projects/demo/src/app) composes every primitive into a scripted conversation and is the best reference for wiring them
 together.
 
 ## Theming
 
 Every colour, space, radius, duration and font size is a CSS custom property defined on `:root` in
-[`styles/_tokens.scss`](projects/ngx-beautiful-ui/styles/_tokens.scss). Override any of them globally or on a wrapper element:
+[`styles/_tokens.scss`](https://github.com/djordjejanjic/ngx-beautiful-ui/blob/main/projects/ngx-beautiful-ui/styles/_tokens.scss). Override any of them globally or on a wrapper element:
 
 ```scss
 .my-assistant {
@@ -137,7 +135,7 @@ Components also expose their own sizing tokens, such as `--bui-task-row-height`,
 - Not ported yet: diff table, records table, filter table, sidebar nav, search, flowchart, insight cards, fine-tune card
   and selection actions. `bui-user-bubble`, `bui-markdown`, `bui-chip-select` and `bui-suggestion-chips` are additions of this port.
 - The original ships a commercial icon set. This port uses its own icons derived from [Lucide](https://lucide.dev), see
-  [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+  [THIRD_PARTY_NOTICES.md](https://github.com/djordjejanjic/ngx-beautiful-ui/blob/main/THIRD_PARTY_NOTICES.md).
 
 ## Development
 
@@ -151,5 +149,5 @@ npm run format:check
 
 ## License
 
-[MIT](LICENSE). The original design and React library are © Shane Levine. The Angular port is © Djordje Janjic. Icon shapes are derived
-from Lucide (ISC), Feather (MIT) and Heroicons (MIT), see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+[MIT](https://github.com/djordjejanjic/ngx-beautiful-ui/blob/main/LICENSE). The original design and React library are © Shane Levine. The Angular port is © Djordje Janjic. Icon shapes are derived
+from Lucide (ISC), Feather (MIT) and Heroicons (MIT), see [THIRD_PARTY_NOTICES.md](https://github.com/djordjejanjic/ngx-beautiful-ui/blob/main/THIRD_PARTY_NOTICES.md).
