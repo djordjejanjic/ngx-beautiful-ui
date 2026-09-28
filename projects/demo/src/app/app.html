@@ -15,9 +15,25 @@
 
   <section class="demo__section">
     <h2 class="demo__heading">Chat</h2>
-    <p class="demo__caption">Every primitive composed into a scripted conversation. Pick a suggestion, or type and press Enter.</p>
-    <div class="demo__chat">
-      <div class="demo__thread">
+    <p class="demo__caption">
+      A scripted conversation inside <code>bui-chat-panel</code>. Pick a suggestion or type and press Enter, then open the Activity tab to
+      see the <code>bui-reply-step</code> trail. The plus button starts a new chat.
+    </p>
+    <bui-chat-panel
+      class="demo__chat-panel"
+      [tabs]="chatTabs"
+      [actions]="chatActions"
+      [(activeTab)]="chatTab"
+      (actionClicked)="onChatAction($event)">
+      @if (chatTab() === chatTabIds.activity) {
+        @for (step of chat.activity(); track step.id) {
+          <bui-reply-step [label]="step.label" [subtitle]="step.subtitle" [duration]="step.duration" [resolving]="step.resolving">
+            {{ step.body }}
+          </bui-reply-step>
+        } @empty {
+          <p class="demo__caption">{{ copy.activityEmpty }}</p>
+        }
+      } @else {
         @for (message of chat.messages(); track message.id) {
           @if (message.role === 'user') {
             <bui-user-bubble [timestamp]="message.createdAt | date: timeFormat">
@@ -52,8 +68,9 @@
           [visible]="!chat.busy()"
           [disabled]="chat.busy()"
           (suggestionSelected)="chat.send($event)" />
-      </div>
+      }
       <bui-prompt-bar
+        buiChatComposer
         [formField]="draft.text"
         [busy]="chat.busy()"
         [menuItems]="composerMenu"
@@ -62,7 +79,7 @@
         (stopped)="chat.stop()"
         (menuItemSelected)="chat.attach($event)"
         (attachmentRemoved)="chat.removeAttachment($event)" />
-    </div>
+    </bui-chat-panel>
   </section>
 
   <section class="demo__section">
@@ -191,7 +208,8 @@
   <section class="demo__section">
     <h2 class="demo__heading">Status</h2>
     <p class="demo__caption">
-      <code>bui-loading-state</code>, <code>bui-thinking-state</code>, <code>bui-shimmer</code> and <code>bui-stream-text</code>.
+      <code>bui-loading-state</code>, <code>bui-thinking-state</code>, <code>bui-shimmer</code>, <code>bui-stream-text</code> and
+      <code>bui-reply-step</code>, the last one still resolving.
     </p>
     <div class="demo__stack">
       <bui-loading-state [label]="copy.loadingSample" />
@@ -200,6 +218,11 @@
       </bui-thinking-state>
       <bui-shimmer>{{ copy.shimmerSample }}</bui-shimmer>
       <p class="demo__stream"><bui-stream-text [text]="copy.streamSample" [streaming]="true" /></p>
+      @for (step of replySteps; track step.label; let last = $last) {
+        <bui-reply-step [label]="step.label" [subtitle]="step.subtitle" [duration]="step.duration" [resolving]="last">
+          {{ step.body }}
+        </bui-reply-step>
+      }
     </div>
   </section>
 

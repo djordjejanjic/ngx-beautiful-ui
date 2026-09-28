@@ -1,8 +1,8 @@
 import { computed, Injectable, signal } from '@angular/core';
 import { BUI_ATTACHMENT_STATUS, BuiAttachmentChip } from 'ngx-beautiful-ui';
 import { concat, interval, map, Observable, Subscription, take, timer } from 'rxjs';
-import { DEMO_ATTACHMENT_NAMES, DEMO_COPY, DEMO_REPLY, DEMO_TIMING } from '../common/demo.constants';
-import { DemoAssistantMessage, DemoAssistantPatch, DemoMessage } from '../common/demo.types';
+import { DEMO_ATTACHMENT_NAMES, DEMO_COPY, DEMO_REPLY, DEMO_REPLY_STEPS, DEMO_TIMING } from '../common/demo.constants';
+import { DemoAssistantMessage, DemoAssistantPatch, DemoMessage, DemoReplyStepView } from '../common/demo.types';
 
 @Injectable({ providedIn: 'root' })
 export class DemoChatService {
@@ -14,6 +14,20 @@ export class DemoChatService {
 
   readonly busy = computed(() => this.messages().some(message => message.role === 'assistant' && message.phase !== 'done'));
   readonly isEmpty = computed(() => this.messages().length === 0);
+
+  readonly activity = computed<DemoReplyStepView[]>(() => {
+    const latest = this.messages()
+      .filter((message): message is DemoAssistantMessage => message.role === 'assistant')
+      .at(-1);
+    if (!latest || latest.phase === 'loading') return [];
+
+    const visible = latest.phase === 'thinking' ? 1 : DEMO_REPLY_STEPS.length;
+    return DEMO_REPLY_STEPS.slice(0, visible).map((step, index) => ({
+      ...step,
+      id: `${latest.id}-${index}`,
+      resolving: latest.phase === 'streaming' && index === DEMO_REPLY_STEPS.length - 1
+    }));
+  });
 
   send(text: string): void {
     if (this.busy()) return;
@@ -36,6 +50,14 @@ export class DemoChatService {
       next: patch => this.patch(assistantId, patch),
       complete: () => this.finish(assistantId)
     });
+  }
+
+  reset(): void {
+    this.reply?.unsubscribe();
+    this.reply = null;
+    this.activeId = null;
+    this.messages.set([]);
+    this.attachments.set([]);
   }
 
   stop(): void {

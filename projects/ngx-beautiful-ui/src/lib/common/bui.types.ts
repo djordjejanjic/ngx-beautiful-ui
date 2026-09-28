@@ -236,3 +236,8 @@ export interface BuiApprovalOptionView {
   label: string;
   selected: boolean;
 }
+
+export interface BuiChatTab {
+  id: string;
+  label: string;
+}

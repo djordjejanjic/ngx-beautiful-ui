@@ -1,0 +1,41 @@
+<div class="bui-chat-panel">
+  @if (hasHeader()) {
+    <div class="bui-chat-panel__header">
+      <div class="bui-chat-panel__tabs">
+        @for (tab of tabs(); track tab.id) {
+          <button
+            type="button"
+            class="bui-chat-panel__tab"
+            [class.bui-chat-panel__tab--active]="tab.id === currentTab()"
+            [attr.aria-pressed]="tab.id === currentTab()"
+            (click)="selectTab(tab.id)">
+            {{ tab.label }}
+          </button>
+        }
+      </div>
+      <div class="bui-chat-panel__actions">
+        @for (action of actions(); track action.id) {
+          <button
+            type="button"
+            class="bui-chat-panel__action"
+            [attr.aria-label]="action.label"
+            [title]="action.label"
+            [disabled]="action.disabled"
+            (click)="actionClicked.emit(action.id)">
+            <bui-icon [src]="action.icon" [size]="iconSize.base" />
+          </button>
+        }
+      </div>
+    </div>
+  }
+
+  <div class="bui-chat-panel__thread" [buiStickToBottom]="stickToBottom()">
+    <div class="bui-chat-panel__content">
+      <ng-content />
+    </div>
+  </div>
+
+  <div class="bui-chat-panel__composer">
+    <ng-content select="[buiChatComposer]" />
+  </div>
+</div>

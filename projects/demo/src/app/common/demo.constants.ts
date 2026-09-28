@@ -5,6 +5,7 @@ import {
   BuiApprovalQuestion,
   BuiButtonSize,
   BuiButtonVariant,
+  BuiChatTab,
   BuiChipOption,
   BuiContextChunk,
   BuiDiffRow,
@@ -15,7 +16,7 @@ import {
   BuiTone,
   BuiToolStep
 } from 'ngx-beautiful-ui';
-import { DemoEntity, DemoTable } from './demo.types';
+import { DemoEntity, DemoReplyStep, DemoTable } from './demo.types';
 
 const demoAvatar = (fill: string, shape: string): string =>
   `data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="${fill}"/>${shape}</svg>`)}`;
@@ -41,6 +42,37 @@ export const DEMO_AGENT_COPY = {
 } as const;
 
 export const DEMO_SEQUENCE_TASK_ID = 'docs';
+
+export const DEMO_CHAT_TAB = {
+  chat: 'chat',
+  activity: 'activity'
+} as const;
+
+export const DEMO_CHAT_TABS: BuiChatTab[] = [
+  { id: DEMO_CHAT_TAB.chat, label: 'Chat' },
+  { id: DEMO_CHAT_TAB.activity, label: 'Activity' }
+];
+
+export const DEMO_CHAT_ACTION = {
+  newChat: 'new-chat'
+} as const;
+
+export const DEMO_CHAT_ACTIONS: BuiAction[] = [{ id: DEMO_CHAT_ACTION.newChat, icon: BUI_ICONS.plus, label: 'New chat' }];
+
+export const DEMO_REPLY_STEPS: DemoReplyStep[] = [
+  {
+    label: 'Search',
+    subtitle: 'Layout guides',
+    duration: '1.2s',
+    body: 'Found three guides comparing CSS Grid, Flexbox and container queries.'
+  },
+  {
+    label: 'Compare',
+    subtitle: 'Trade-offs',
+    duration: '0.8s',
+    body: 'Grid fits the page shell best, with Flexbox inside each message.'
+  }
+];
 
 export const DEMO_TOOL_STEPS: BuiToolStep[] = [
   {
@@ -274,7 +306,8 @@ export const DEMO_COPY = {
   streamSample: 'Streaming text reveals each new token with a soft, blurred tail',
   shimmerSample: 'Generating summary',
   loadingSample: 'Searching the docs',
-  thinkingDoneLabel: null
+  thinkingDoneLabel: null,
+  activityEmpty: 'No activity yet. Send a message to see the steps behind each reply.'
 } as const;
 
 export const DEMO_REPLY = `### Layout options at a glance

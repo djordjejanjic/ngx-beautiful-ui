@@ -1,0 +1,50 @@
+:host {
+  display: block;
+}
+
+.bui-reply-step {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bui-space-3);
+  width: 100%;
+  transform-origin: top left;
+  animation: bui-fade-up var(--bui-duration-slow) var(--bui-ease-out) backwards;
+  transition:
+    opacity var(--bui-duration-slow) var(--bui-ease-out),
+    filter var(--bui-duration-slow) var(--bui-ease-out),
+    transform var(--bui-duration-slow) var(--bui-ease-out);
+
+  &--resolving {
+    opacity: 0.55;
+    filter: blur(0.5px);
+    transform: scale(0.985);
+  }
+
+  &__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--bui-space-2);
+    font-size: var(--bui-font-size-body-xs);
+    line-height: var(--bui-line-height-tight);
+  }
+
+  &__label {
+    color: var(--bui-text);
+    font-weight: var(--bui-font-weight-medium);
+  }
+
+  &__subtitle {
+    color: var(--bui-text-muted);
+  }
+
+  &__duration {
+    color: var(--bui-text);
+  }
+
+  &__body {
+    color: var(--bui-text);
+    font-size: var(--bui-font-size-body-sm);
+    line-height: var(--bui-line-height-normal);
+  }
+}

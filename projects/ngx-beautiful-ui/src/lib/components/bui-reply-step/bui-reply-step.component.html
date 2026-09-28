@@ -1,0 +1,14 @@
+<div class="bui-reply-step" [class.bui-reply-step--resolving]="resolving()" [attr.aria-busy]="resolving()">
+  <div class="bui-reply-step__meta">
+    <span class="bui-reply-step__label">{{ label() }}</span>
+    @if (subtitle()) {
+      <span class="bui-reply-step__subtitle">{{ subtitle() }}</span>
+    }
+    @if (duration()) {
+      <span class="bui-reply-step__duration">{{ durationPrefix() }} {{ duration() }}</span>
+    }
+  </div>
+  <div class="bui-reply-step__body">
+    <ng-content />
+  </div>
+</div>

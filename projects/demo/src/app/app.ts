@@ -6,6 +6,7 @@ import {
   BuiApprovalAnswers,
   BuiApprovalCardComponent,
   BuiButtonComponent,
+  BuiChatPanelComponent,
   BuiChipSelectComponent,
   BuiCodeBlockComponent,
   BuiContextCardsComponent,
@@ -17,6 +18,7 @@ import {
   BuiPromptBarComponent,
   BuiRecommendation,
   BuiRecommendationCardComponent,
+  BuiReplyStepComponent,
   BuiShimmerComponent,
   BuiSourceChipComponent,
   BuiSourceListComponent,
@@ -34,6 +36,10 @@ import {
   DEMO_ASSISTANT_ACTIONS,
   DEMO_BUTTON_SIZES,
   DEMO_BUTTON_VARIANTS,
+  DEMO_CHAT_ACTION,
+  DEMO_CHAT_ACTIONS,
+  DEMO_CHAT_TAB,
+  DEMO_CHAT_TABS,
   DEMO_CHIP_OPTIONS,
   DEMO_CODE_DIFF,
   DEMO_CODE_LINES,
@@ -46,6 +52,7 @@ import {
   DEMO_MENU_ITEMS,
   DEMO_RECOMMENDATION_FALLBACK,
   DEMO_REPLY,
+  DEMO_REPLY_STEPS,
   DEMO_SOURCES,
   DEMO_SUGGESTIONS,
   DEMO_TABLE,
@@ -64,6 +71,7 @@ import { DemoChatService } from './services/demo-chat.service';
     BuiActionRowComponent,
     BuiApprovalCardComponent,
     BuiButtonComponent,
+    BuiChatPanelComponent,
     BuiChipSelectComponent,
     BuiCodeBlockComponent,
     BuiContextCardsComponent,
@@ -74,6 +82,7 @@ import { DemoChatService } from './services/demo-chat.service';
     BuiMarkdownComponent,
     BuiPromptBarComponent,
     BuiRecommendationCardComponent,
+    BuiReplyStepComponent,
     BuiShimmerComponent,
     BuiSourceChipComponent,
     BuiSourceListComponent,
@@ -102,6 +111,7 @@ export class App {
 
   protected readonly pickedMenuItem = signal<string>(DEMO_COPY.menuPlaceholder);
   protected readonly thinkingExpanded = signal(false);
+  protected readonly chatTab = signal<string | null>(DEMO_CHAT_TAB.chat);
 
   protected readonly approvalVisible = signal(true);
   private readonly approvalAnswers = signal<BuiApprovalAnswers | null>(null);
@@ -171,9 +181,20 @@ export class App {
   protected readonly codeDiff = DEMO_CODE_DIFF;
   protected readonly tones = DEMO_TONES;
   protected readonly entities = DEMO_ENTITIES;
+  protected readonly chatTabs = DEMO_CHAT_TABS;
+  protected readonly chatTabIds = DEMO_CHAT_TAB;
+  protected readonly chatActions = DEMO_CHAT_ACTIONS;
+  protected readonly replySteps = DEMO_REPLY_STEPS;
 
   protected pickMenuItem(id: string): void {
     this.pickedMenuItem.set(this.menuItems.find(item => item.id === id)?.label ?? DEMO_COPY.menuPlaceholder);
+  }
+
+  protected onChatAction(id: string): void {
+    if (id !== DEMO_CHAT_ACTION.newChat) return;
+
+    this.chat.reset();
+    this.chatTab.set(DEMO_CHAT_TAB.chat);
   }
 
   protected submitApproval(answers: BuiApprovalAnswers): void {

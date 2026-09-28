@@ -102,23 +102,10 @@
     }
   }
 
-  &__chat {
-    display: flex;
-    flex-direction: column;
-    gap: var(--bui-space-8);
-    padding: var(--bui-space-8);
-    border-radius: var(--bui-radius-3xl);
-    background: var(--bui-canvas);
-    box-shadow: var(--bui-shadow-hairline);
-  }
-
-  &__thread {
-    display: flex;
-    flex-direction: column;
-    gap: var(--bui-space-12);
-    max-height: var(--demo-thread-max-height);
-    padding: var(--bui-space-4);
-    overflow-y: auto;
+  &__chat-panel {
+    --bui-chat-panel-height: var(--demo-chat-height);
+    --bui-chat-panel-max-width: none;
+    --bui-chat-panel-gap: var(--bui-space-12);
   }
 
   &__assistant {

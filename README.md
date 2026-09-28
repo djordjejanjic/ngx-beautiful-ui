@@ -14,6 +14,7 @@ and no UI framework dependency.
 | Selector                  | What it does                                                                                                         |
 | ------------------------- | -------------------------------------------------------------------------------------------------------------------- |
 | **Chat**                  |                                                                                                                      |
+| `bui-chat-panel`          | Fixed-height chat card with tab chips, header actions, a thread that sticks to the bottom and a composer slot.       |
 | `bui-prompt-bar`          | Composer with an auto-growing textarea, attachment chips, a `+` menu and send/stop. Signal-forms control (`string`). |
 | `bui-user-bubble`         | User message bubble with a timestamp and `[buiBubbleAttachments]` / `[buiBubbleActions]` content slots.              |
 | `bui-markdown`            | GFM markdown rendered with `marked`, sanitised with DOMPurify. Emits `(linkActivated)` for same-origin links.        |
@@ -25,6 +26,7 @@ and no UI framework dependency.
 | **Agent status**          |                                                                                                                      |
 | `bui-loading-state`       | Pixel-grid loader with a shimmering label and an elapsed timer.                                                      |
 | `bui-thinking-state`      | Collapsible "Thinking… / Thought for 4 seconds" trace with two-way `[(expanded)]`.                                   |
+| `bui-reply-step`          | One agent step (label, subtitle, "for 4s" and text) with a blurred resolving state.                                  |
 | `bui-tool-chips`          | Tool calls as compact, expandable rows, plus file-diff chips with a hover diff preview.                              |
 | `bui-task-rows`           | Pending, running, failed and completed tasks with expandable details, as capsules or a list.                         |
 | `bui-approval-card`       | Human-in-the-loop questions, one at a time, with single or multiple choice and a custom answer.                      |
@@ -42,7 +44,7 @@ and no UI framework dependency.
 | `bui-shimmer`             | Shimmering text for pending states.                                                                                  |
 | `bui-icon`                | Mask-based icon that takes any image URL and is coloured with `currentColor`.                                        |
 
-The package also exports `BuiClickOutsideDirective`, the `BUI_ICONS` set, all `Bui*` types and the static helpers used by the components.
+The package also exports `BuiClickOutsideDirective`, `BuiStickToBottomDirective`, the `BUI_ICONS` set, all `Bui*` types and the static helpers used by the components.
 
 ## Requirements
 
@@ -132,7 +134,7 @@ Components also expose their own sizing tokens, such as `--bui-task-row-height`,
 
 - The original is a React 19 + Tailwind v4 shadcn registry. This port is built with Angular signals and plain SCSS, and components take
   their data through inputs instead of shipping demo content.
-- Not ported yet: chat composer, diff table, records table, filter table, sidebar nav, search, flowchart, insight cards, fine-tune card
+- Not ported yet: diff table, records table, filter table, sidebar nav, search, flowchart, insight cards, fine-tune card
   and selection actions. `bui-user-bubble`, `bui-markdown`, `bui-chip-select` and `bui-suggestion-chips` are additions of this port.
 - The original ships a commercial icon set. This port uses its own icons derived from [Lucide](https://lucide.dev), see
   [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

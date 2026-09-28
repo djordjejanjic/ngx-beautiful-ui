@@ -23,6 +23,18 @@ export type DemoMessage = DemoUserMessage | DemoAssistantMessage;
 
 export type DemoAssistantPatch = Partial<Pick<DemoAssistantMessage, 'phase' | 'thinkingMs' | 'markdown'>>;
 
+export interface DemoReplyStep {
+  label: string;
+  subtitle: string;
+  duration: string;
+  body: string;
+}
+
+export interface DemoReplyStepView extends DemoReplyStep {
+  id: string;
+  resolving: boolean;
+}
+
 export interface DemoEntity {
   name: string;
   color: string | null;

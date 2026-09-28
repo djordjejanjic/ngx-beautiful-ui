@@ -22,6 +22,9 @@ export const BUI_ICONS = {
   chevronUp: buiSvg(
     '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>'
   ),
+  clock: buiSvg(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>'
+  ),
   close: buiSvg(
     '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>'
   ),
@@ -121,8 +124,11 @@ export const BUI_LABELS = {
   startOver: 'Start over',
   dismiss: 'Dismiss',
   previousQuestion: 'Previous question',
-  nextQuestion: 'Next question'
+  nextQuestion: 'Next question',
+  stepDurationPrefix: 'for'
 } as const;
+
+export const BUI_STICK_TO_BOTTOM_THRESHOLD_PX = 24;
 
 export const BUI_SIGNAL_METER_BARS = 3;
 

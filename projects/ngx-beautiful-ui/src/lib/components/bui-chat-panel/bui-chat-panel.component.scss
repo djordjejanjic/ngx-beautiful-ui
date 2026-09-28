@@ -1,0 +1,113 @@
+:host {
+  display: block;
+}
+
+.bui-chat-panel {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: var(--bui-chat-panel-max-width);
+  height: var(--bui-chat-panel-height);
+  overflow: hidden;
+  border-radius: var(--bui-radius-2xl);
+  background: var(--bui-surface);
+  box-shadow: var(--bui-shadow-card);
+
+  &__header {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--bui-space-4);
+    padding: var(--bui-space-3);
+    border-bottom: 1px solid var(--bui-border);
+  }
+
+  &__tabs,
+  &__actions {
+    display: flex;
+    align-items: center;
+  }
+
+  &__actions {
+    gap: var(--bui-space-2);
+  }
+
+  &__tab {
+    padding: 3px var(--bui-space-4);
+    border: 0;
+    border-radius: var(--bui-radius-sm);
+    background: transparent;
+    color: var(--bui-text);
+    font: inherit;
+    font-size: var(--bui-font-size-body-sm);
+    opacity: 0.5;
+    cursor: pointer;
+    transition:
+      background-color var(--bui-duration-instant) ease,
+      opacity var(--bui-duration-instant) ease;
+
+    &:hover {
+      opacity: 0.75;
+    }
+
+    &--active,
+    &--active:hover {
+      background: var(--bui-field);
+      opacity: 1;
+    }
+  }
+
+  &__action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--bui-chat-action-size);
+    height: var(--bui-chat-action-size);
+    padding: 0;
+    border: 0;
+    border-radius: var(--bui-radius-sm);
+    background: transparent;
+    color: var(--bui-text-faint);
+    cursor: pointer;
+    transition:
+      background-color var(--bui-duration-instant) ease,
+      color var(--bui-duration-instant) ease;
+
+    &:hover:not(:disabled) {
+      background: var(--bui-hover);
+      color: var(--bui-text-muted);
+    }
+
+    &:disabled {
+      cursor: default;
+      opacity: 0.5;
+    }
+  }
+
+  &__thread {
+    flex: 1;
+    min-height: 0;
+    padding: var(--bui-space-5) var(--bui-space-6) var(--bui-space-2);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-color: var(--bui-border-strong) transparent;
+    scrollbar-width: thin;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--bui-chat-panel-gap);
+  }
+
+  &__composer {
+    flex-shrink: 0;
+    margin-top: auto;
+    padding: var(--bui-space-3);
+
+    &:empty {
+      display: none;
+    }
+  }
+}
